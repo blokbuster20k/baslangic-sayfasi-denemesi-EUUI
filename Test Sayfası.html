@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="cyberpunk-dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Bozkurt | Gelişmiş Başlangıç</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ------------------- */
+        /* --- TEMALAR --- */
+        /* ------------------- */
+        :root {
+            --radius: 16px;
+            --transition: 220ms cubic-bezier(.2,.6,.2,1);
+        }
+
+        /* 1-11. Mevcut Temalar */
+        [data-theme="cyberpunk-dark"] { --bg-0:#07070b; --bg-1:#0c0c14; --bg-2:#131326; --text:#e6f7ff; --muted:#9bb0bd; --cyan:#00ffe0; --magenta:#ff2bd6; --yellow:#f8ff53; --glass:rgba(255,255,255,0.06); --glass-brd:rgba(255,255,255,0.18); --shadow:rgba(0,0,0,0.45); --bg-gradient: radial-gradient(1200px 700px at 10% 0%, #1a1147 0%, transparent 55%), radial-gradient(900px 600px at 90% 20%, #003b4a 0%, transparent 50%), linear-gradient(160deg, var(--bg-0), var(--bg-2)); }
+        [data-theme="cyberpunk-light"] { --bg-0:#f6f7fb; --bg-1:#f0f2fa; --bg-2:#e9ecf7; --text:#0b1020; --muted:#4a5568; --cyan:#00a29b; --magenta:#d900b6; --yellow:#c6cc00; --glass:rgba(0,0,0,0.04); --glass-brd:rgba(0,0,0,0.12); --shadow:rgba(0,0,0,0.18); --bg-gradient: linear-gradient(160deg, var(--bg-0), var(--bg-2)); }
+        [data-theme="dracula"] { --bg-0:#282a36; --bg-1:#20222c; --bg-2:#1a1b23; --text:#f8f8f2; --muted:#bd93f9; --cyan:#8be9fd; --magenta:#ff79c6; --yellow:#f1fa8c; --glass:rgba(80, 80, 100, 0.1); --glass-brd:rgba(189, 147, 249, 0.3); --shadow:rgba(0,0,0,0.3); --bg-gradient: linear-gradient(160deg, var(--bg-0), var(--bg-2)); }
+        [data-theme="nord"] { --bg-0:#2E3440; --bg-1:#3B4252; --bg-2:#434C5E; --text:#ECEFF4; --muted:#88C0D0; --cyan:#8FBCBB; --magenta:#B48EAD; --yellow:#EBCB8B; --glass:rgba(216, 222, 233, 0.05); --glass-brd:rgba(216, 222, 233, 0.15); --shadow:rgba(0,0,0,0.3); --bg-gradient: linear-gradient(160deg, var(--bg-0), var(--bg-1)); }
+        [data-theme="solarized-dark"] { --bg-0:#002b36; --bg-1:#073642; --bg-2:#001f27; --text:#93a1a1; --muted:#859900; --cyan:#2aa198; --magenta:#d33682; --yellow:#b58900; --glass:rgba(147, 161, 161, 0.07); --glass-brd:rgba(147, 161, 161, 0.2); --shadow:rgba(0,0,0,0.4); --bg-gradient: linear-gradient(160deg, var(--bg-0), var(--bg-1)); }
+        [data-theme="solarized-light"] { --bg-0:#fdf6e3; --bg-1:#eee8d5; --bg-2:#e7e1cf; --text:#586e75; --muted:#93a1a1; --cyan:#2aa198; --magenta:#d33682; --yellow:#b58900; --glass:rgba(0,0,0,0.03); --glass-brd:rgba(0,0,0,0.1); --shadow:rgba(0,0,0,0.15); --bg-gradient: linear-gradient(160deg, var(--bg-0), var(--bg-1)); }
+        [data-theme="monokai"] { --bg-0:#272822; --bg-1:#20211c; --bg-2:#1a1a16; --text:#f8f8f2; --muted:#75715e; --cyan:#66d9ef; --magenta:#f92672; --yellow:#e6db74; --glass:rgba(249, 38, 114, 0.05); --glass-brd:rgba(249, 38, 114, 0.2); --shadow:rgba(0,0,0,0.4); --bg-gradient: linear-gradient(160deg, var(--bg-0), var(--bg-1)); }
+        [data-theme="tokyo-night"] { --bg-0:#1a1b26; --bg-1:#16161e; --bg-2:#121217; --text:#a9b1d6; --muted:#bb9af7; --cyan:#7dcfff; --magenta:#ff7a93; --yellow:#e0af68; --glass:rgba(125, 207, 255, 0.05); --glass-brd:rgba(125, 207, 255, 0.15); --shadow:rgba(0,0,0,0.4); --bg-gradient: linear-gradient(160deg, var(--bg-0), var(--bg-2)); }
+        [data-theme="gruvbox"] { --bg-0:#282828; --bg-1:#1d2021; --bg-2:#161819; --text:#ebdbb2; --muted:#b8bb26; --cyan:#8ec07c; --magenta:#d65d0e; --yellow:#fabd2f; --glass:rgba(235, 219, 178, 0.05); --glass-brd:rgba(235, 219, 178, 0.15); --shadow:rgba(0,0,0,0.3); --bg-gradient: linear-gradient(160deg, var(--bg-0), var(--bg-1)); }
+        [data-theme="forest"] { --bg-0:#1B2B34; --bg-1:#142129; --bg-2:#0f191f; --text:#CDD3DE; --muted:#A3BE8C; --cyan:#88C0D0; --magenta:#B48EAD; --yellow:#EBCB8B; --glass:rgba(163, 190, 140, 0.06); --glass-brd:rgba(163, 190, 140, 0.2); --shadow:rgba(0,0,0,0.3); --bg-gradient: linear-gradient(160deg, var(--bg-0), var(--bg-2)); }
+        [data-theme="midnight"] { --bg-0:#0d0c1d; --bg-1:#0a0916; --bg-2:#07060f; --text:#e0e0e0; --muted:#a39ffc; --cyan:#6967ce; --magenta:#ff70a6; --yellow:#ff9770; --glass:rgba(163, 159, 252, 0.07); --glass-brd:rgba(163, 159, 252, 0.2); --shadow:rgba(0,0,0,0.4); --bg-gradient: linear-gradient(160deg, var(--bg-0), var(--bg-1)); }
+
+        /* 12. YENİ: Türkçü */
+        [data-theme="turkcu"] { --bg-0:#2c3e50; --bg-1:#233140; --bg-2:#19222c; --text:#ecf0f1; --muted:#3498db; --cyan:#1abc9c; --magenta:#e74c3c; --yellow:#f1c40f; --glass:rgba(26, 188, 156, 0.07); --glass-brd:rgba(26, 188, 156, 0.2); --shadow:rgba(0,0,0,0.4); --bg-gradient: linear-gradient(160deg, var(--bg-0), var(--bg-1)); }
+
+        /* 13. YENİ: Turancı */
+        [data-theme="turanci"] { --bg-0:#3a2c2c; --bg-1:#2c2121; --bg-2:#1e1616; --text:#f5e1da; --muted:#c86e57; --cyan:#57a8c8; --magenta:#c8576c; --yellow:#e7a553; --glass:rgba(200, 87, 108, 0.08); --glass-brd:rgba(200, 87, 108, 0.22); --shadow:rgba(0,0,0,0.5); --bg-gradient: radial-gradient(circle at top right, #5c4343, transparent 60%), linear-gradient(160deg, var(--bg-0), var(--bg-1)); }
+
+        /* 14. YENİ: Minecraft */
+        [data-theme="minecraft"] { --radius: 4px; --bg-0:#5d4a3c; --bg-1:#4a3b30; --bg-2:#3a2e26; --text:#ffffff; --muted:#a0a0a0; --cyan:#55ffff; --magenta:#81c784; --yellow:#ffd700; --glass:rgba(255,255,255,0.1); --glass-brd:rgba(255,255,255,0.25); --shadow:rgba(0,0,0,0.5); --bg-gradient: linear-gradient(160deg, #3c8d3f, #5d4a3c); }
+
+        /* 15. YENİ: CoD: TF 141 */
+        [data-theme="cod-tf141"] { --bg-0:#1c1d1f; --bg-1:#121314; --bg-2:#0c0d0e; --text:#c1c2c3; --muted:#6c7a89; --cyan:#34e7e7; --magenta:#a4b0be; --yellow:#f7b731; --glass:rgba(52, 231, 231, 0.05); --glass-brd:rgba(52, 231, 231, 0.15); --shadow:rgba(0,0,0,0.5); --bg-gradient: radial-gradient(circle at 10% 20%, rgba(30,30,30,0.9), transparent 70%), linear-gradient(170deg, var(--bg-0), var(--bg-1)); }
+
+        /* 16. YENİ: Matrix */
+        [data-theme="matrix"] { --bg-0:#000000; --bg-1:#050505; --bg-2:#0a0a0a; --text:#00ff41; --muted:#008F11; --cyan:#00ff41; --magenta:#35ff6d; --yellow:#9bffb8; --glass:rgba(0, 255, 65, 0.05); --glass-brd:rgba(0, 255, 65, 0.2); --shadow:rgba(0,0,0,0.6); --bg-gradient: linear-gradient(160deg, var(--bg-0), var(--bg-1)); }
+
+        /* 17. YENİ: Özel Tema */
+        [data-theme="custom"] {
+            --bg-0: var(--custom-bg-0, #1f1f32);
+            --bg-1: var(--custom-bg-1, #1a1a2b);
+            --bg-2: var(--custom-bg-2, #151524);
+            --text: var(--custom-text, #efefff);
+            --muted: var(--custom-muted, #a0a0cc);
+            --cyan: var(--custom-cyan, #00ffe0);
+            --magenta: var(--custom-magenta, #ff2bd6);
+            --yellow: var(--custom-yellow, #f8ff53);
+            --glass: rgba(255,255,255,0.06); --glass-brd: rgba(255,255,255,0.18); --shadow: rgba(0,0,0,0.45);
+            --bg-gradient: linear-gradient(160deg, var(--bg-0), var(--bg-1));
+        }
+
+        /* ------------------- */
+        /* --- TEMEL STİLLER --- */
+        /* ------------------- */
+        * { box-sizing: border-box; }
+        html, body { height: 100%; }
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            color: var(--text);
+            background: var(--bg-gradient);
+            overflow-x: hidden;
+            transition: background var(--transition), color var(--transition);
+        }
+        .container { position: relative; max-width: 1400px; margin: 0 auto; padding: 28px 20px 60px; z-index: 1; display: grid; grid-template-columns: 1fr; gap: 18px; }
+        .glass { background: var(--glass); border: 1px solid var(--glass-brd); border-radius: var(--radius); box-shadow: 0 10px 30px var(--shadow); backdrop-filter: blur(12px); transition: background var(--transition), border-color var(--transition), box-shadow var(--transition); }
+        .header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 18px; padding: 14px 16px; }
+        .logo { display: flex; align-items: center; gap: 12px; font-family: Orbitron, monospace; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+        .logo .brand { background: linear-gradient(135deg, var(--cyan), var(--magenta)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-size: 18px; }
+        .subtitle { font-size: 12px; color: var(--muted); letter-spacing: .2em; }
+        .bozkurt { width: 44px; height: 44px; flex: 0 0 44px; filter: drop-shadow(0 0 6px var(--cyan)) drop-shadow(0 0 16px var(--magenta)); }
+        .bozkurt path { fill: none; stroke: var(--cyan); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .clock-wrap { display: grid; gap: 2px; justify-items: center; }
+        .time { font-family: Orbitron, monospace; font-weight: 800; font-size: clamp(26px, 4.5vw, 40px); letter-spacing: .06em; background: linear-gradient(135deg, var(--cyan), var(--magenta)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 20px color-mix(in srgb, var(--cyan) 25%, transparent); }
+        .date { font-size: 12px; color: var(--muted); letter-spacing: .12em; text-transform: capitalize; }
+        .search { display: grid; grid-template-columns: 160px 1fr auto; gap: 10px; padding: 14px; align-items: center; }
+        .select, .input, .btn, .control { height: 44px; border-radius: 12px; border: 1px solid var(--glass-brd); background: rgba(0,0,0,.18); color: var(--text); padding: 0 12px; font-size: 14px; outline: none; transition: all var(--transition); backdrop-filter: blur(8px); }
+        .input::placeholder { color: var(--muted); }
+        .select:focus, .input:focus, .control:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px color-mix(in srgb, var(--cyan) 20%, transparent); }
+        .btn { display: inline-grid; place-items: center; padding: 0 18px; background: linear-gradient(135deg, var(--cyan), var(--magenta)); border: none; color: #051015; font-weight: 700; letter-spacing: .05em; cursor: pointer; }
+        .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px color-mix(in srgb, var(--cyan) 20%, transparent), 0 8px 20px color-mix(in srgb, var(--magenta) 15%, transparent); }
+        .main-content { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; }
+        .section { padding: 16px; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .section-title { font-family: Orbitron, monospace; font-size: 14px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
+        .card { position: relative; padding: 14px 12px; background: linear-gradient(to bottom right, rgba(255,255,255,.08), rgba(255,255,255,.03)); border-radius: 14px; cursor: pointer; transition: all var(--transition); overflow: hidden; min-height: 96px; border: 1px solid var(--glass-brd); }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px var(--shadow); border-color: transparent; }
+        .card::after { content: ""; position: absolute; inset: -1px; background: conic-gradient(from 180deg at 50% 50%, color-mix(in srgb, var(--cyan) 12%, transparent), transparent, color-mix(in srgb, var(--magenta) 12%, transparent), transparent); filter: blur(14px); opacity: 0; transition: opacity var(--transition); z-index: -1; }
+        .card:hover::after { opacity: 1; }
+        .ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font-size: 22px; font-weight: 700; color: #051015; background: linear-gradient(135deg, var(--cyan), var(--magenta)); box-shadow: inset 0 0 1px rgba(255,255,255,.4); margin-bottom: 8px; }
+        .title { font-weight: 700; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .url { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .card-actions { position: absolute; top: 8px; right: 8px; display: flex; gap: 6px; opacity: 0; transition: opacity var(--transition); }
+        .card:hover .card-actions { opacity: 1; }
+        .tools-container { display: flex; flex-direction: column; gap: 18px; }
+        .tool-widget { padding: 16px; }
+        .tools-section { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        #pomodoro { text-align: center; }
+        #pomodoro-timer { font-family: Orbitron, monospace; font-size: 36px; color: var(--yellow); margin: 10px 0; }
+        #notes-container { display: flex; flex-direction: column; gap: 10px; max-height: 200px; overflow-y: auto; padding-right: 5px; }
+        .note { padding: 10px 12px; background: rgba(0,0,0,0.15); border-radius: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
+        .note-text { flex-grow: 1; }
+        .note-delete-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 16px; padding: 4px; border-radius: 5px; }
+        .note-delete-btn:hover { color: var(--magenta); background: rgba(255,255,255,0.1); }
+        #new-note-input { width: 100%; margin-top: 10px; }
+        #quote-widget .quote-text { font-size: 14px; font-style: italic; color: var(--muted); }
+        #quote-widget .quote-author { text-align: right; font-weight: bold; margin-top: 8px; color: var(--cyan); font-size: 13px; }
+        #weather-widget .weather-content { text-align: center; }
+        #weather-widget .weather-temp { font-size: 1.8em; font-weight: bold; color: var(--yellow); }
+        #weather-widget .weather-desc { text-transform: capitalize; color: var(--muted); font-size: 13px; }
+        .modal { position: fixed; inset: 0; display: none; place-items: center; background: rgba(0,0,0,.55); z-index: 50; }
+        .modal.active { display: grid; }
+        .modal-card { width: min(700px, 94vw); max-height: 85vh; padding: 18px; border-radius: 18px; background: var(--glass); border: 1px solid var(--glass-brd); box-shadow: 0 20px 50px var(--shadow); backdrop-filter: blur(16px); overflow-y: auto; }
+        .form { display: grid; gap: 12px; margin-top: 10px; }
+        .row { display: grid; gap: 8px; }
+        .label { font-size: 12px; color: var(--muted); letter-spacing: .08em; }
+        .actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+        .btn-ghost { height: 42px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--glass-brd); background: transparent; color: var(--text); cursor: pointer; }
+        .btn-primary { height: 42px; padding: 0 16px; border-radius: 12px; border: none; background: linear-gradient(135deg, var(--cyan), var(--magenta)); color: #051015; font-weight: 800; letter-spacing: .05em; cursor: pointer; }
+        .theme-selector { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
+        .theme-option { cursor: pointer; padding: 10px; border-radius: 10px; border: 2px solid var(--glass-brd); transition: all var(--transition); }
+        .theme-option.active { border-color: var(--cyan); box-shadow: 0 0 10px color-mix(in srgb, var(--cyan) 30%, transparent); }
+        .theme-preview { display: flex; gap: 5px; margin-top: 8px; }
+        .theme-preview span { width: 20px; height: 20px; border-radius: 5px; }
+        .customization-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-top:10px; }
+        .color-picker-wrapper { display: flex; flex-direction: column; gap: 8px; }
+        input[type="color"] { width: 100%; height: 40px; border: none; padding: 0; background: none; cursor: pointer; border-radius: 8px; overflow:hidden; border: 1px solid var(--glass-brd); }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: none; border-radius: 8px; }
+        .hr { height: 1px; background-color: var(--glass-brd); border: none; margin: 20px 0; }
+        .icon-btn { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 10px; border: 1px solid var(--glass-brd); background: linear-gradient( to bottom, rgba(255,255,255,.08), rgba(255,255,255,.03) ); color: var(--text); cursor: pointer; transition: all var(--transition); }
+        .icon-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px var(--shadow); border-color: transparent; }
+        .mini { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--glass-brd); background: rgba(0,0,0,.25); color: var(--text); display: grid; place-items: center; cursor: pointer; }
+        body::before {content:"";position:fixed;inset:0;background-image:radial-gradient(2px 2px at 20% 30%,#fff3 50%,#0000 51%),radial-gradient(1.5px 1.5px at 70% 60%,#fff3 50%,#0000 51%),radial-gradient(1.2px 1.2px at 40% 80%,#fff3 50%,#0000 51%);opacity:.15;pointer-events:none;animation:twinkle 8s linear infinite alternate;z-index:0}
+        @keyframes twinkle{to{opacity:.25}}
+        @media (max-width:960px){.main-content{grid-template-columns:1fr}}
+        @media (max-width:720px){.header{grid-template-columns:1fr auto}.logo .subtitle{display:none}.clock-wrap{display:none}.search{grid-template-columns:1fr}}
+    </style>
+</head>
+
+<body>
+  <div class="container">
+    <header class="header glass">
+      <div class="logo">
+        <svg class="bozkurt" viewBox="0 0 64 64" aria-label="Bozkurt">
+          <path d="M10 42 L18 30 L26 28 L30 20 L36 16 L46 18 L54 26 M26 28 L34 30 L40 36 L46 44 M34 30 L30 38 L22 44 M30 20 L28 16 L30 14 L33 16 M46 18 L50 16 L53 18 L51 22 M22 44 L26 46 L30 44 M46 44 L50 46 L54 44" />
+        </svg>
+        <div>
+          <div class="brand">EUUI 6.2 // BOZKURT</div>
+          <div class="subtitle">TÜRK ÖĞÜN ÇALIŞ GÜVEN</div>
+        </div>
+      </div>
+      <div class="clock-wrap">
+        <div id="time" class="time"></div>
+        <div id="date" class="date"></div>
+      </div>
+      <div class="header-right">
+        <button id="settingsBtn" class="icon-btn" title="Ayarlar">⚙️</button>
+      </div>
+    </header>
+
+    <div class="search glass">
+      <select id="engine" class="select" aria-label="Arama motoru"></select>
+      <input id="q" class="input" type="text" placeholder="Ara... (Ctrl / ⌘ + K)" autocomplete="off" />
+      <button id="searchBtn" class="btn">Ara</button>
+    </div>
+
+    <main class="main-content">
+        <div class="left-column">
+            <section class="section glass">
+                <div class="section-header">
+                    <h2 class="section-title">Kısayollar</h2>
+                    <button id="addShortcutBtn" class="btn">+ Kısayol</button>
+                </div>
+                <div id="grid" class="grid"></div>
+            </section>
+        </div>
+
+        <div class="right-column">
+            <div class="tools-container">
+                <section class="section glass tool-widget">
+                    <h2 class="section-title">Araç Kutusu</h2>
+                    <div class="tools-section">
+                        <div id="pomodoro">
+                            <h3 class="section-title" style="text-align:center; margin-bottom: 10px;">Pomodoro</h3>
+                            <div id="pomodoro-timer">25:00</div>
+                            <div id="pomodoro-controls">
+                                <button id="pomo-start" class="btn-ghost">Başlat</button>
+                                <button id="pomo-pause" class="btn-ghost">Duraklat</button>
+                                <button id="pomo-reset" class="btn-ghost">Sıfırla</button>
+                            </div>
+                        </div>
+                        <div id="weather-widget">
+                             <h3 class="section-title" style="text-align:center; margin-bottom: 10px;">Hava Durumu</h3>
+                             <div id="weather-content">Yükleniyor...</div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="section glass tool-widget">
+                    <div class="section-header">
+                         <h2 class="section-title">Hızlı Notlar</h2>
+                    </div>
+                    <div id="notes-container"></div>
+                    <input id="new-note-input" class="input" type="text" placeholder="Yeni not yazıp Enter'a basın..."/>
+                </section>
+
+                 <section class="section glass tool-widget">
+                    <div class="section-header">
+                        <h2 class="section-title">Günün Sözü</h2>
+                        <button id="new-quote-btn" class="btn-ghost">Yeni</button>
+                    </div>
+                    <div id="quote-widget"></div>
+                </section>
+            </div>
+        </div>
+    </main>
+  </div>
+
+  <div id="shortcutModal" class="modal">
+    <div class="modal-card">
+      <div class="section-header"><h2 class="section-title">Yeni Kısayol</h2><button class="close-modal-btn icon-btn" aria-label="Kapat">✕</button></div>
+      <form class="form" id="shortcutForm">
+        <div class="row"><label class="label" for="s-title">Başlık</label><input id="s-title" class="control" type="text" placeholder="Örn: GitHub" required /></div>
+        <div class="row"><label class="label" for="s-url">URL</label><input id="s-url" class="control" type="url" placeholder="https://example.com" required /></div>
+        <div class="row"><label class="label" for="s-icon">İkon</label><input id="s-icon" class="control" type="text" placeholder="💻" maxlength="3" /></div>
+        <div class="actions"><button type="button" class="btn-ghost cancel-modal-btn">Vazgeç</button><button type="submit" class="btn-primary">Ekle</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div id="settingsModal" class="modal">
+    <div class="modal-card">
+        <div class="section-header"><h2 class="section-title">Ayarlar</h2><button class="close-modal-btn icon-btn" aria-label="Kapat">✕</button></div>
+        <div class="form">
+            <div class="row"><label class="label">Tema Seçimi</label><div id="theme-selector-container" class="theme-selector"></div></div>
+            <hr class="hr">
+            <div class="row">
+                 <label class="label">Canlı Özelleştirme ("Özel" Tema Aktifken)</label>
+                 <div class="customization-grid">
+                    <div class="color-picker-wrapper"><label class="label">Ana Arka Plan</label><input type="color" id="custom-bg-0-picker" data-var="--custom-bg-0"></div>
+                    <div class="color-picker-wrapper"><label class="label">Ana Metin</label><input type="color" id="custom-text-picker" data-var="--custom-text"></div>
+                    <div class="color-picker-wrapper"><label class="label">Vurgu 1</label><input type="color" id="custom-cyan-picker" data-var="--custom-cyan"></div>
+                    <div class="color-picker-wrapper"><label class="label">Vurgu 2</label><input type="color" id="custom-magenta-picker" data-var="--custom-magenta"></div>
+                 </div>
+            </div>
+             <hr class="hr">
+             <div class="row"><label class="label">Varsayılan Arama Motoru</label><select id="defaultEngineSelect" class="control"></select></div>
+        </div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+    const store = {
+        get: (key, def) => { try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : def; } catch { return def; } },
+        set: (key, val) => { try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) { console.error(e); } }
+    };
+
+    const THEMES = [
+        { id: 'cyberpunk-dark', name: 'Cyberpunk Dark', colors: ['#00ffe0', '#ff2bd6', '#0c0c14'] }, { id: 'cyberpunk-light', name: 'Cyberpunk Light', colors: ['#00a29b', '#d900b6', '#f0f2fa'] },
+        { id: 'dracula', name: 'Dracula', colors: ['#bd93f9', '#ff79c6', '#282a36'] }, { id: 'nord', name: 'Nord', colors: ['#88C0D0', '#B48EAD', '#2E3440'] },
+        { id: 'solarized-dark', name: 'Solarized Dark', colors: ['#2aa198', '#d33682', '#002b36'] }, { id: 'solarized-light', name: 'Solarized Light', colors: ['#2aa198', '#b58900', '#fdf6e3'] },
+        { id: 'monokai', name: 'Monokai', colors: ['#66d9ef', '#f92672', '#272822'] }, { id: 'tokyo-night', name: 'Tokyo Night', colors: ['#7dcfff', '#bb9af7', '#1a1b26'] },
+        { id: 'gruvbox', name: 'Gruvbox', colors: ['#b8bb26', '#fabd2f', '#282828'] }, { id: 'forest', name: 'Forest', colors: ['#A3BE8C', '#88C0D0', '#1B2B34'] },
+        { id: 'midnight', name: 'Midnight', colors: ['#6967ce', '#ff70a6', '#0d0c1d'] }, { id: 'turkcu', name: 'Türkçü', colors: ['#1abc9c', '#e74c3c', '#2c3e50'] },
+        { id: 'turanci', name: 'Turancı', colors: ['#57a8c8', '#c8576c', '#3a2c2c'] }, { id: 'minecraft', name: 'Minecraft', colors: ['#55ffff', '#81c784', '#5d4a3c'] },
+        { id: 'cod-tf141', name: 'CoD: TF 141', colors: ['#34e7e7', '#a4b0be', '#1c1d1f'] }, { id: 'matrix', name: 'Matrix', colors: ['#00ff41', '#35ff6d', '#000000'] },
+        { id: 'custom', name: 'Özel', colors: ['#888', '#aaa', '#ccc'] },
+    ];
+
+    const QUOTES = [
+        { text: "Bir kıvılcım düşer önce, büyür yavaş yavaş.", author: "H. Nihal Atsız" }, { text: "Türk, öğün, çalış, güven!", author: "M. Kemal Atatürk" },
+        { text: "Hayatta en hakiki mürşit ilimdir, fendir.", author: "M. Kemal Atatürk" }, { text: "Adalet, mülkün temelidir.", author: "Hz. Ömer" },
+        { text: "Vatanını en çok seven, görevini en iyi yapandır.", author: "M. Kemal Atatürk" }, { text: "Umutsuz durumlar yoktur, umutsuz insanlar vardır. Ben hiçbir zaman umudumu yitirmedim.", author: "M. Kemal Atatürk" }
+    ];
+
+    const ENGINE_URL = {
+        google: q => `https://www.google.com/search?q=${encodeURIComponent(q)}`, duckduckgo: q => `https://duckduckgo.com/?q=${encodeURIComponent(q)}`,
+        yandex: q => `https://yandex.com/search/?text=${encodeURIComponent(q)}`, bing: q => `https://www.bing.com/search?q=${encodeURIComponent(q)}`
+    };
+
+    let state = {
+        theme: store.get('theme', 'cyberpunk-dark'),
+        defaultEngine: store.get('engine', 'google'),
+        shortcuts: store.get('shortcuts', [{ id: crypto.randomUUID(), title: 'GitHub', url: 'https://github.com', icon: '💻' }]),
+        notes: store.get('notes', [{ id: crypto.randomUUID(), text: 'Yeni bir not ekle...' }]),
+        customColors: store.get('customColors', { '--custom-bg-0': '#1f1f32', '--custom-text': '#efefff', '--custom-cyan': '#00ffe0', '--custom-magenta': '#ff2bd6' })
+    };
+    
+    const docEl = document.documentElement;
+    const timeEl = document.getElementById('time');
+    const dateEl = document.getElementById('date');
+    const searchEngineSelect = document.getElementById('engine');
+    const searchInput = document.getElementById('q');
+    const shortcutGrid = document.getElementById('grid');
+    const notesContainer = document.getElementById('notes-container');
+    const newNoteInput = document.getElementById('new-note-input');
+    const shortcutModal = document.getElementById('shortcutModal');
+    const settingsModal = document.getElementById('settingsModal');
+    const shortcutForm = document.getElementById('shortcutForm');
+    const pomoTimerEl = document.getElementById('pomodoro-timer');
+    const themeSelectorContainer = document.getElementById('theme-selector-container');
+    const defaultEngineSelect = document.getElementById('defaultEngineSelect');
+    const weatherContent = document.getElementById('weather-content');
+    const quoteWidget = document.getElementById('quote-widget');
+    const customColorPickers = document.querySelectorAll('.customization-grid input[type="color"]');
+
+    let pomoInterval, pomoTime = 1500, pomoRunning = false;
+
+    const colorLuminance = (hex, lum, isYellow = false) => {
+        hex = String(hex).replace(/[^0-9a-f]/gi, '');
+        if (hex.length < 6) { hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2]; }
+        lum = lum || 0; let rgb = "#", c, i;
+        for (i = 0; i < 3; i++) {
+            c = parseInt(hex.substr(i*2,2), 16);
+            if (isYellow && i === 2) { c = Math.round(Math.min(Math.max(0, c * 0.5), 255)); }
+            else { c = Math.round(Math.min(Math.max(0, c * (1 + lum)), 255)); }
+            rgb += ("00"+c.toString(16)).substr(c.toString(16).length);
+        } return rgb;
+    };
+
+    const applyCustomColors = () => {
+        const baseBg = state.customColors['--custom-bg-0'];
+        docEl.style.setProperty('--custom-bg-0', baseBg); docEl.style.setProperty('--custom-bg-1', colorLuminance(baseBg, -0.1));
+        docEl.style.setProperty('--custom-bg-2', colorLuminance(baseBg, -0.2));
+        docEl.style.setProperty('--custom-text', state.customColors['--custom-text']);
+        docEl.style.setProperty('--custom-muted', colorLuminance(state.customColors['--custom-text'], -0.3));
+        docEl.style.setProperty('--custom-cyan', state.customColors['--custom-cyan']);
+        docEl.style.setProperty('--custom-magenta', state.customColors['--custom-magenta']);
+        docEl.style.setProperty('--custom-yellow', colorLuminance(state.customColors['--custom-cyan'], 0.5, true));
+    };
+
+    const applyTheme = (themeId) => {
+        docEl.setAttribute('data-theme', themeId); state.theme = themeId; store.set('theme', themeId);
+        if (themeId === 'custom') { applyCustomColors(); } else {
+            ['--custom-bg-0', '--custom-bg-1', '--custom-bg-2', '--custom-text', '--custom-muted', '--custom-cyan', '--custom-magenta', '--custom-yellow'].forEach(prop => docEl.style.removeProperty(prop));
+        }
+        document.querySelectorAll('.theme-option').forEach(opt => opt.classList.toggle('active', opt.dataset.themeId === themeId));
+    };
+
+    const renderThemeSelector = () => {
+        themeSelectorContainer.innerHTML = '';
+        THEMES.forEach(theme => {
+            const option = document.createElement('div');
+            option.className = 'theme-option'; if (theme.id === state.theme) option.classList.add('active');
+            option.dataset.themeId = theme.id;
+            option.innerHTML = `<div class="title">${theme.name}</div><div class="theme-preview"><span style="background-color:${theme.colors[0]}"></span><span style="background-color:${theme.colors[1]}"></span><span style="background-color:${theme.colors[2]}"></span></div>`;
+            option.addEventListener('click', () => applyTheme(theme.id));
+            themeSelectorContainer.appendChild(option);
+        });
+    };
+
+    const updateClock = () => {
+        const now = new Date();
+        if (timeEl) timeEl.textContent = now.toLocaleTimeString('tr-TR', { hour12: false });
+        if (dateEl) dateEl.textContent = now.toLocaleDateString('tr-TR', { weekday: 'long', day: 'numeric', month: 'long' });
+    };
+
+    const doSearch = () => { const q = searchInput.value.trim(); if (!q) return; const url = ENGINE_URL[searchEngineSelect.value](q); window.open(url, '_blank'); };
+    const renderShortcuts = () => {
+        shortcutGrid.innerHTML = ''; state.shortcuts.forEach(s => {
+            const card = document.createElement('div'); card.className = 'card'; card.title = s.url;
+            card.addEventListener('click', (e) => { if (!e.target.closest('.card-actions')) window.open(s.url, '_blank'); });
+            card.innerHTML = `<div class="card-actions"><button class="mini delete-shortcut-btn" data-id="${s.id}" title="Sil">🗑️</button></div><div class="ic">${s.icon || s.title?.[0]?.toUpperCase() || '★'}</div><div class="title">${s.title}</div><div class="url">${s.url.replace(/^https?:\/\//, '')}</div>`;
+            shortcutGrid.appendChild(card);
+        });
+    };
+
+    const saveShortcut = (e) => {
+        e.preventDefault(); const form = e.target; let url = form.querySelector('#s-url').value.trim(); if (!url.startsWith('http')) { url = 'https://' + url; }
+        const newShortcut = { id: crypto.randomUUID(), title: form.querySelector('#s-title').value.trim(), url: url, icon: form.querySelector('#s-icon').value.trim() };
+        state.shortcuts.unshift(newShortcut); store.set('shortcuts', state.shortcuts); renderShortcuts(); closeModal(shortcutModal); form.reset();
+    };
+
+    const deleteShortcut = (id) => { state.shortcuts = state.shortcuts.filter(s => s.id !== id); store.set('shortcuts', state.shortcuts); renderShortcuts(); };
+    const renderNotes = () => {
+        notesContainer.innerHTML = ''; state.notes.forEach(note => {
+            const noteEl = document.createElement('div'); noteEl.className = 'note';
+            noteEl.innerHTML = `<span class="note-text">${note.text}</span><button class="note-delete-btn" data-id="${note.id}" title="Notu Sil">✕</button>`;
+            notesContainer.appendChild(noteEl);
+        });
+    };
+
+    const addNote = () => { const text = newNoteInput.value.trim(); if (!text) return; state.notes.unshift({ id: crypto.randomUUID(), text }); store.set('notes', state.notes); renderNotes(); newNoteInput.value = ''; };
+    const deleteNote = (id) => { state.notes = state.notes.filter(n => n.id !== id); store.set('notes', state.notes); renderNotes(); };
+    const updatePomoDisplay = () => { pomoTimerEl.textContent = `${Math.floor(pomoTime/60).toString().padStart(2,'0')}:${(pomoTime%60).toString().padStart(2,'0')}`; };
+    const startPomo = () => { if (pomoRunning) return; pomoRunning = true; pomoInterval = setInterval(() => { pomoTime--; updatePomoDisplay(); if (pomoTime <= 0) { clearInterval(pomoInterval); pomoRunning = false; alert('Pomodoro süresi doldu!'); } }, 1000); };
+    const pausePomo = () => { pomoRunning = false; clearInterval(pomoInterval); };
+    const resetPomo = () => { pausePomo(); pomoTime = 1500; updatePomoDisplay(); };
+    const renderQuote = () => { const q = QUOTES[Math.floor(Math.random() * QUOTES.length)]; quoteWidget.innerHTML = `<p class="quote-text">“${q.text}”</p><p class="quote-author">- ${q.author}</p>`; };
+
+    const getWeather = async () => {
+        navigator.geolocation.getCurrentPosition(async pos => {
+            const { latitude, longitude } = pos.coords; const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`;
+            try {
+                const res = await fetch(url); const data = await res.json(); const w = data.current_weather;
+                const icons = {0:'☀️',1:'🌤️',2:'🌥️',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌦️',61:'🌧️',63:'🌧️',65:'🌧️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
+                weatherContent.innerHTML = `<div class="weather-temp">${icons[w.weathercode]||'🌀'} ${Math.round(w.temperature)}°C</div><div class="weather-desc">Rüzgar: ${w.windspeed} km/s</div>`;
+            } catch { weatherContent.innerText = "Hava durumu alınamadı."; }
+        }, () => { weatherContent.innerText = "Konum izni reddedildi."; });
+    };
+
+    const openModal = (modalEl) => modalEl.classList.add('active');
+    const closeModal = (modalEl) => modalEl.classList.remove('active');
+
+    const setupEventListeners = () => {
+        document.getElementById('searchBtn').addEventListener('click', doSearch);
+        searchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSearch(); });
+        document.getElementById('addShortcutBtn').addEventListener('click', () => openModal(shortcutModal));
+        shortcutForm.addEventListener('submit', saveShortcut);
+        shortcutGrid.addEventListener('click', e => { if (e.target.matches('.delete-shortcut-btn')) deleteShortcut(e.target.dataset.id); });
+        newNoteInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') addNote(); });
+        notesContainer.addEventListener('click', e => { if (e.target.matches('.note-delete-btn')) deleteNote(e.target.dataset.id); });
+        document.getElementById('pomo-start').addEventListener('click', startPomo);
+        document.getElementById('pomo-pause').addEventListener('click', pausePomo);
+        document.getElementById('pomo-reset').addEventListener('click', resetPomo);
+        document.getElementById('settingsBtn').addEventListener('click', () => openModal(settingsModal));
+        defaultEngineSelect.addEventListener('change', e => { state.defaultEngine = e.target.value; store.set('engine', e.target.value); searchEngineSelect.value = e.target.value; });
+        document.getElementById('new-quote-btn').addEventListener('click', renderQuote);
+        customColorPickers.forEach(p => p.addEventListener('input', e => { state.customColors[e.target.dataset.var] = e.target.value; store.set('customColors', state.customColors); if (state.theme !== 'custom') applyTheme('custom'); else applyCustomColors(); }));
+        document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if (e.target === m || e.target.matches('.cancel-modal-btn, .close-modal-btn')) closeModal(m); }));
+        window.addEventListener('keydown', e => { const isMac = navigator.platform.toUpperCase().includes('MAC'); if ((isMac ? e.metaKey : e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); searchInput.focus(); searchInput.select(); } if (e.key === 'Escape') { closeModal(shortcutModal); closeModal(settingsModal); } });
+    };
+
+    const init = () => {
+        const engineOptionsHtml = Object.keys(ENGINE_URL).map(key => `<option value="${key}">${key.charAt(0).toUpperCase() + key.slice(1)}</option>`).join('');
+        searchEngineSelect.innerHTML = engineOptionsHtml; defaultEngineSelect.innerHTML = engineOptionsHtml;
+        searchEngineSelect.value = state.defaultEngine; defaultEngineSelect.value = state.defaultEngine;
+        if (state.theme === 'custom') { customColorPickers.forEach(p => { p.value = state.customColors[p.dataset.var]; }); }
+        applyTheme(state.theme);
+        updateClock(); setInterval(updateClock, 1000);
+        renderShortcuts(); renderNotes(); renderThemeSelector(); updatePomoDisplay(); renderQuote(); getWeather();
+        setupEventListeners();
+    };
+
+    init();
+    })();
+  </script>
+</body>
+</html>

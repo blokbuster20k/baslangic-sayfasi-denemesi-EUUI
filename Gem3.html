@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="everforest-dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>EUUI 8.0 • Final Cut</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+      /* ------------------- */
+      /* 1. TEMELLER & DEĞİŞKENLER */
+      /* ------------------- */
+      :root {
+        --radius-sm: 8px;
+        --radius-md: 14px;
+        --radius-lg: 20px;
+        --gap-sm: 10px;
+        --gap-md: 16px;
+        --gap-lg: 24px;
+        --transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        --font-main: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        --font-display: 'Orbitron', monospace;
+        /* Kullanıcı tarafından ayarlanabilir değişkenler */
+        --accent-color: #a7c080;
+        --custom-bg-image: none;
+        --widget-blur: 16px;
+        --widget-opacity: 0.75;
+      }
+
+      /* ------------------- */
+      /* 2. TEMA TANIMLAMALARI */
+      /* ------------------- */
+      [data-theme="everforest-dark"] { --bg-0:#2d353b; --bg-1:#343f44; --bg-2:#3d484d; --bg-3:rgba(61, 72, 77, var(--widget-opacity)); --text:#d3c6aa; --muted:#9da9a0; --cyan:#83c092; --magenta:#d699b6; --yellow:#dbbc7f; --glass-brd:rgba(211, 198, 170, 0.1); --shadow:rgba(30, 30, 30, 0.3); --shadow-light:rgba(30, 30, 30, 0.15); --bg-gradient: radial-gradient(ellipse 120% 70% at 90% 110%, #a7c0801a, transparent), radial-gradient(ellipse 120% 70% at 10% -10%, #d699b615, transparent), var(--bg-1); }
+      [data-theme="rose-pine"] { --bg-0:#191724; --bg-1:#1f1d2e; --bg-2:#26233a; --bg-3:rgba(38, 35, 58, var(--widget-opacity)); --text:#e0def4; --muted:#908caa; --cyan:#9ccfd8; --magenta:#c4a7e7; --yellow:#f6c177; --glass-brd:rgba(224, 222, 244, 0.1); --shadow:rgba(0,0,0,0.3); --shadow-light:rgba(0,0,0,0.15); --bg-gradient: radial-gradient(ellipse at 5% 105%, #c4a7e72b, transparent), radial-gradient(ellipse at 95% -5%, #ebbcba25, transparent), var(--bg-1); }
+      [data-theme="monokai"] { --bg-0:#272822; --bg-1:#2D2A2E; --bg-2:#3E3D32; --bg-3:rgba(62, 61, 50, var(--widget-opacity)); --text:#F8F8F2; --muted:#999894; --cyan:#66D9EF; --magenta:#F92672; --yellow:#E6DB74; --glass-brd:rgba(248,248,242,0.1); --shadow:rgba(0,0,0,0.3); --shadow-light:rgba(0,0,0,0.15); --bg-gradient: radial-gradient(ellipse at 5% 5%, #A6E22E25, transparent 40%), var(--bg-1); }
+      [data-theme="tokyo-night"] { --bg-0:#1a1b26; --bg-1:#1f2335; --bg-2:#24283b; --bg-3:rgba(36,40,59, var(--widget-opacity)); --text:#c0caf5; --muted:#737aa2; --cyan:#7dcfff; --magenta:#bb9af7; --yellow:#e0af68; --glass-brd:rgba(192,202,245,0.1); --shadow:rgba(0,0,0,0.3); --shadow-light:rgba(0,0,0,0.15); --bg-gradient: radial-gradient(ellipse 100% 70% at 10% 20%, #3d59a144, transparent), linear-gradient(160deg, var(--bg-0) 30%, var(--bg-1) 100%); }
+      [data-theme="charcoal"] { --bg-0:#202020; --bg-1:#282828; --bg-2:#333333; --bg-3:rgba(51, 51, 51, var(--widget-opacity)); --text:#EAEAEA; --muted:#999999; --cyan:#4aabff; --magenta:#ff4a80; --yellow:#ffc54a; --glass-brd:rgba(234, 234, 234, 0.1); --shadow:rgba(0,0,0,0.25); --shadow-light:rgba(0,0,0,0.1); --bg-gradient: var(--bg-1); }
+      [data-theme="github-light"] { --bg-0:#ffffff; --bg-1:#f6f8fa; --bg-2:#eef2f5; --bg-3:rgba(238,242,245, var(--widget-opacity)); --text:#24292e; --muted:#586069; --cyan:#0366d6; --magenta:#d73a49; --yellow:#f29d2f; --glass-brd:rgba(36,41,46,0.1); --shadow:rgba(36,41,46,0.1); --shadow-light:rgba(36,41,46,0.05); --bg-gradient: linear-gradient(170deg, var(--bg-0), var(--bg-1)); }
+      
+      /* ------------------- */
+      /* 3. BAZ STİLLER & YARDIMCILAR */
+      /* ------------------- */
+      *, *::before, *::after { box-sizing: border-box; }
+      :focus-visible { outline: 2px solid var(--accent-color); outline-offset: 2px; border-radius: var(--radius-sm); }
+      body { margin: 0; font-family: var(--font-main); color: var(--text); background: var(--bg-1); transition: background var(--transition), color var(--transition); }
+      body::before { content: ""; position: fixed; inset: 0; z-index: -1; background-image: var(--custom-bg-image), var(--bg-gradient); background-size: cover; background-position: center; transition: background-image 500ms ease; }
+      .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+      
+      /* ------------------- */
+      /* 4. ANİMASYONLAR */
+      /* ------------------- */
+      @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+      @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
+      .main-content { animation: fadeInUp 600ms var(--transition) both; }
+      .widget { animation: fadeInUp 500ms var(--transition) both; opacity: 0; }
+      dialog[open] { animation: modalFadeIn 250ms var(--transition) forwards; }
+      
+      /* ------------------- */
+      /* 5. LAYOUT */
+      /* ------------------- */
+      .app-container { display: grid; place-items: center; min-height: 100vh; padding: var(--gap-lg); }
+      .main-content { width: 100%; max-width: 1000px; display: flex; flex-direction: column; align-items: center; gap: var(--gap-lg); }
+      .widgets-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--gap-md); width: 100%; }
+      
+      /* ------------------- */
+      /* 6. BİLEŞENLER (COMPONENTS) */
+      /* ------------------- */
+      
+      /* Üst Bölüm */
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        gap: var(--gap-lg);
+      }
+      .profile-greeting-container {
+        display: flex;
+        align-items: center;
+        gap: var(--gap-md);
+        text-align: left;
+      }
+      .profile-pic {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--glass-brd);
+        cursor: pointer;
+        transition: transform var(--transition);
+      }
+      .profile-pic:hover {
+        transform: scale(1.05);
+      }
+      .greeting-text {
+        line-height: 1.4;
+      }
+      .greeting {
+        font-size: 1.2rem;
+        margin: 0;
+        cursor: pointer;
+        user-select: none;
+        transition: color var(--transition);
+      }
+      .greeting:hover {
+        color: color-mix(in srgb, var(--text) 80%, transparent);
+      }
+      .quote-container {
+        margin-top: var(--gap-sm);
+        padding-left: var(--gap-md);
+        border-left: 3px solid var(--accent-color);
+        font-size: 0.9rem;
+        color: var(--muted);
+        font-style: italic;
+        max-width: 400px;
+      }
+      #quote-text { margin: 0; }
+      .time-container {
+        text-align: right;
+        flex-shrink: 0; /* Küçülmesini engelle */
+      }
+      .clock {
+        font-family: var(--font-display);
+        font-size: clamp(2.5rem, 8vw, 4rem); /* Küçültüldü */
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: .05em;
+        background: linear-gradient(135deg, var(--cyan), var(--magenta));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 30px color-mix(in srgb, var(--cyan) 10%, transparent);
+        margin: 0;
+      }
+      .subdate {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin: 4px 0 0;
+      }
+      .header > * { transition: opacity var(--transition); }
+      body.hide-greeting .profile-greeting-container, body.hide-date .subdate { opacity: 0; height: 0; margin: 0; overflow: hidden; }
+
+      /* Arama */
+      .search-container { display: grid; grid-template-columns: auto 1fr auto auto auto; align-items: center; width: 100%; max-width: 720px; gap: 12px; }
+      .search-input { height: 52px; border: 1px solid var(--glass-brd); background: var(--bg-3); backdrop-filter: blur(var(--widget-blur)); color: var(--text); padding: 0 18px; font-size: 1rem; outline: none; transition: all var(--transition); border-radius: var(--radius-md); }
+      .search-input:focus { border-color: var(--accent-color); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 25%, transparent), 0 0 30px -5px color-mix(in srgb, var(--accent-color) 30%, transparent); }
+      
+      /* Butonlar */
+      .btn-icon, .engine-chip { height: 52px; border: 1px solid var(--glass-brd); background: var(--bg-3); backdrop-filter: blur(var(--widget-blur)); color: var(--text); cursor: pointer; display: grid; place-items: center; transition: all var(--transition); border-radius: var(--radius-md); }
+      .engine-chip { padding: 0 16px; font-size: .9rem; white-space: nowrap; }
+      .btn-icon { width: 52px; }
+      .btn-icon:hover, .engine-chip:hover { transform: translateY(-2px); background: color-mix(in srgb, var(--text) 5%, transparent); box-shadow: 0 8px 16px -4px var(--shadow); }
+      .btn-icon:active, .engine-chip:active { transform: translateY(0) scale(0.97); box-shadow: none; }
+      .btn-primary { background: var(--accent-color); color: var(--bg-0); border: none; }
+      .btn-icon svg { width: 22px; height: 22px; }
+      
+      /* Widgetlar */
+      .widget { background: var(--bg-3); border: 1px solid var(--glass-brd); border-radius: var(--radius-lg); backdrop-filter: blur(var(--widget-blur)); box-shadow: 0 4px 6px -1px var(--shadow-light), 0 10px 20px -5px var(--shadow); transition: all var(--transition); overflow: hidden; background-image: radial-gradient(circle at top left, rgba(255,255,255,0.03), transparent 30%);}
+      .widget-header { display: flex; align-items: center; justify-content: space-between; padding: var(--gap-md); gap: 12px; border-bottom: 1px solid var(--glass-brd); }
+      .widget-title { font-size: 0.9rem; font-weight: 600; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin: 0; }
+      .widget-controls .mini { width: 36px; height: 36px; border-radius: var(--radius-sm); }
+      .widget-body { padding: var(--gap-md); }
+      .widget.collapsed .widget-body { display: none; }
+      .widget-header svg { color: var(--muted); width: 18px; height: 18px; }
+      
+      /* Kısayollar */
+      .shortcuts-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: var(--gap-md); }
+      .shortcut-card { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; padding: 12px 6px; border-radius: var(--radius-md); transition: background var(--transition), transform var(--transition); user-select: none; }
+      .shortcut-card:hover { background: color-mix(in srgb, var(--text) 5%, transparent); transform: translateY(-3px); }
+      .shortcut-icon { width: 48px; height: 48px; border-radius: var(--radius-md); display: grid; place-items: center; font-size: 24px; color: var(--bg-0); background: linear-gradient(135deg, var(--cyan), var(--magenta)); margin-bottom: 8px; }
+      .shortcut-title { font-size: 12px; color: var(--text); text-align: center; word-break: break-word; }
+      
+      /* Not Defteri Widget */
+      #notepad { height: 100%; width: 100%; background: transparent; border: none; color: var(--text); font-family: var(--font-main); font-size: 0.95rem; resize: none; outline: none; }
+      
+      /* Dialog/Modal */
+      dialog { width: min(700px, 92vw); padding: 0; border: 1px solid var(--glass-brd); border-radius: var(--radius-lg); background: var(--bg-2); color: var(--text); box-shadow: 0 25px 50px -12px var(--shadow); }
+      dialog::backdrop { background: rgba(0,0,0,.5); backdrop-filter: blur(8px); }
+      .modal-close-btn { transition: color var(--transition), transform var(--transition); }
+      .modal-close-btn:hover { color: var(--text); transform: rotate(90deg) scale(1.1); }
+      
+      /* Ayarlar Modalı */
+      .settings-section details { border: 1px solid var(--glass-brd); border-radius: var(--radius-md); margin-bottom: var(--gap-md); }
+      .settings-section summary { font-weight: 600; padding: 12px; cursor: pointer; list-style-position: inside; }
+      .settings-section > div { padding: 12px; }
+      
+      /* Toast Bildirimleri */
+      .toasts { position: fixed; bottom: 16px; left: 16px; display: grid; gap: 10px; z-index: 1000; }
+      .toast { display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: var(--radius-md); border: 1px solid var(--glass-brd); background: var(--bg-2); color: var(--text); box-shadow: 0 4px 6px -1px var(--shadow-light), 0 10px 20px -5px var(--shadow); animation: fadeInUp .3s ease-out; backdrop-filter: blur(10px); }
+      .toast-icon { font-size: 1.2rem; }
+      .toast.success { border-left: 4px solid var(--cyan); }
+      .toast.warn { border-left: 4px solid var(--yellow); }
+      
+      /* Erişilebilirlik */
+      @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+      @media (max-width: 768px) {
+        .header { flex-direction: column; align-items: flex-start; }
+        .time-container { align-self: flex-end; margin-top: -30px; }
+        .quote-container { max-width: 100%; }
+      }
+      
+      /* ------------------- */
+      /* 7. GERİ KALAN STİLLER (Öncekiyle Benzer) */
+      /* ------------------- */
+      .widget-left { display: flex; align-items: center; gap: 10px; } .widget-controls { display: flex; align-items: center; gap: 8px; } .shortcut-card[draggable="true"] { cursor: grab; } .shortcut-card.dragging { opacity: .5; transform: scale(.98); } .shortcut-remove { position: absolute; top: 6px; right: 6px; width: 20px; height: 20px; border-radius: 50%; border: none; background: rgba(0,0,0,.3); backdrop-filter: blur(5px); color: #fff; display: none; cursor: pointer; font-size: 14px; line-height: 1; } .shortcuts-editing .shortcut-card .shortcut-remove { display: grid; place-items: center; } .shortcuts-editing .shortcut-card { border-color: var(--glass-brd); } .tools-container { display: flex; flex-wrap: wrap; gap: 12px; } .tool-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; background-color: var(--bg-2); border: 1px solid var(--glass-brd); border-radius: var(--radius-md); color: var(--text); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: all var(--transition); } .tool-btn:hover { background-color: var(--bg-0); border-color: var(--accent-color); transform: translateY(-2px); box-shadow: 0 4px 15px -2px color-mix(in srgb, var(--accent-color) 15%, transparent); } .tool-btn .icon { font-size: 1.2em; } .weather-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; } .weather-current { display: flex; align-items: center; gap: 16px; } .weather-icon { font-size: 2.2rem; } .weather-temp { font-size: 2.2em; font-weight: bold; color: var(--yellow); } .weather-meta { color: var(--muted); font-size: .9rem; } .forecast { display: grid; grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)); gap: 8px; margin-top: 10px; } .forecast-day { padding: 10px; border: 1px solid var(--glass-brd); border-radius: var(--radius-md); background: var(--bg-2); text-align: center; font-size: .9rem; } .badge { display: inline-flex; align-items: center; gap:6px; padding: 6px 10px; border-radius: 999px; border: 1px solid var(--glass-brd); background: var(--bg-2); color: var(--text); font-size: .85rem; } .modal-header { padding: var(--gap-md) var(--gap-lg); border-bottom: 1px solid var(--glass-brd); display: flex; justify-content: space-between; align-items: center; } .modal-title { font-family: var(--font-display); font-size: 1.1em; letter-spacing: .1em; margin: 0; text-transform: uppercase; } .modal-close-btn { background: none; border: none; color: var(--muted); font-size: 24px; cursor: pointer; line-height: 1; } .modal-body { padding: var(--gap-lg); max-height: 70vh; overflow-y: auto; } .modal-actions { display: flex; justify-content: flex-end; gap: 10px; padding: var(--gap-md) var(--gap-lg); border-top: 1px solid var(--glass-brd); } .ai-tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--gap-md); } .ai-tool-card { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: var(--radius-md); text-decoration: none; background: var(--bg-2); transition: all var(--transition); border: 1px solid transparent; } .ai-tool-card:hover { transform: translateY(-3px); background: var(--bg-0); box-shadow: 0 0 20px color-mix(in srgb, var(--accent-color) 10%, transparent); border-color: var(--glass-brd); } .ai-tool-icon { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 8px; font-size: 20px; flex-shrink: 0; } .ai-tool-name { font-weight: 600; color: var(--text); } .settings-title { margin: 0 0 var(--gap-md) 0; font-size: 1rem; font-weight: 700; color: var(--muted); letter-spacing: .05em; text-transform: uppercase; border-bottom: 1px solid var(--glass-brd); padding-bottom: 8px; } .theme-switcher { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--gap-md); } .theme-option { cursor: pointer; padding: 12px; border: 2px solid transparent; border-radius: var(--radius-md); background: var(--bg-2); transition: all var(--transition); } .theme-option:hover { border-color: var(--muted); transform: translateY(-2px); } .theme-option.active { border-color: var(--accent-color); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 25%, transparent); } .theme-name { font-weight: 600; margin-bottom: 8px; } .theme-preview { display: flex; gap: 4px; height: 20px; border-radius: 6px; overflow: hidden; } .theme-preview span { flex: 1; } .settings-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: var(--gap-md); } .settings-row label { display: inline-flex; align-items: center; gap: 8px; flex-grow: 1;} input[type=range] { flex-grow: 2;} .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-md); } .form-grid .full { grid-column: 1 / -1; } .field { display: flex; flex-direction: column; gap: 6px; } .field label { font-size: .9rem; color: var(--muted); } .field input, .field select { height: 44px; border: 1px solid var(--glass-brd); background: var(--bg-2); color: var(--text); padding: 0 12px; border-radius: var(--radius-md); outline: none; transition: border var(--transition), box-shadow var(--transition); } .field input:focus, .field select:focus { border-color: var(--accent-color); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 20%, transparent); } #settings-fab { position: fixed; bottom: var(--gap-lg); right: var(--gap-lg); width: 56px; height: 56px; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="main-content">
+            <header class="header" aria-label="Profil ve Saat">
+                <div class="profile-greeting-container">
+                    <img id="profile-pic" src="" alt="Profil Fotoğrafı" class="profile-pic" title="Profil resmini değiştirmek için tıkla">
+                    <div class="greeting-text">
+                        <p id="greeting" class="greeting" title="İsmi/unvanı düzenlemek için tıkla"></p>
+                        <div id="quote-container" class="quote-container">
+                            <p id="quote-text"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="time-container">
+                    <div id="time" class="clock" aria-live="polite">00:00</div>
+                    <div id="date" class="subdate">—</div>
+                </div>
+            </header>
+
+            <div class="search-container" role="search">
+                <button id="engine-chip" class="engine-chip" aria-label="Arama motoru değiştir">Google</button>
+                <input id="q" class="search-input" type="text" placeholder="Ara veya komut gir... (? ile yardım)" autocomplete="off" aria-label="Arama">
+                <button id="mic-btn" class="btn-icon" title="Sesle arama" aria-label="Sesle arama"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line></svg></button>
+                <button id="ai-tools-btn" class="btn-icon" title="Yapay Zeka Araçları (Ctrl+K)" aria-haspopup="dialog" aria-controls="ai-tools-modal"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 0 1 9 9 9 9 0 0 1-9 9 9 9 0 0 1-9-9 9 9 0 0 1 9-9z"></path><path d="M10 12a2 2 0 1 0 4 0 2 2 0 0 0-4 0z"></path><path d="M12 18a2.5 2.5 0 0 0 2.5-2.5"></path><path d="M12 6a2.5 2.5 0 0 1-2.5 2.5"></path></svg></button>
+                <button id="search-btn" class="btn-icon btn-primary" title="Ara" aria-label="Ara"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+            </div>
+
+            <div class="widgets-grid">
+                <section id="w-shortcuts" class="widget">
+                    <div class="widget-header">
+                        <div class="widget-left"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg><h2 class="widget-title">Hızlı Erişim</h2></div>
+                        <div class="widget-controls">
+                            <button id="shortcuts-edit-btn" class="btn-icon mini" title="Düzenle" aria-pressed="false"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>
+                            <button id="shortcut-add-btn" class="btn-icon mini" title="Kısayol Ekle"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+                            <button data-collapse="w-shortcuts" class="btn-icon mini" title="Daralt / Genişlet"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        </div>
+                    </div>
+                    <div class="widget-body"><div id="shortcuts-container" class="shortcuts-container" aria-live="polite"></div></div>
+                </section>
+
+                <section id="w-notepad" class="widget">
+                    <div class="widget-header">
+                        <div class="widget-left"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg><h2 class="widget-title">Not Defteri</h2></div>
+                        <div class="widget-controls"><button data-collapse="w-notepad" class="btn-icon mini" title="Daralt / Genişlet"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button></div>
+                    </div>
+                    <div class="widget-body"><textarea id="notepad" placeholder="Hızlı notlarınızı buraya yazın... Otomatik kaydedilir."></textarea></div>
+                </section>
+
+                <section id="w-weather" class="widget">
+                    <div class="widget-header">
+                        <div class="widget-left"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a5 5 0 0 0-3-8h-1.26A8 8 0 1 0 4 15.25"></path></svg><h2 class="widget-title">Hava Durumu</h2></div>
+                        <div class="widget-controls">
+                            <span id="weather-location-label" class="badge" title="Konum"></span>
+                            <button id="weather-loc-btn" class="btn-icon mini" title="Konum Seç"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></button>
+                            <button data-collapse="w-weather" class="btn-icon mini" title="Daralt / Genişlet"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                        </div>
+                    </div>
+                    <div class="widget-body"><div id="weather-content"><div class="weather-top"><div class="weather-current"><div id="w-icon" class="weather-icon">—</div><div><div id="w-temp" class="weather-temp">—</div><div id="w-meta" class="weather-meta">—</div></div></div><div id="w-updated" class="weather-meta">—</div></div><div id="forecast" class="forecast"></div></div></div>
+                </section>
+            </div>
+        </div>
+        <button id="settings-fab" class="btn-icon btn-primary" title="Ayarlar" aria-haspopup="dialog" aria-controls="settings-modal"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
+
+    </div>
+    <dialog id="ai-tools-modal" aria-labelledby="ai-tools-title"><header class="modal-header"><h3 id="ai-tools-title" class="modal-title">Yapay Zeka Araçları</h3><button class="modal-close-btn" aria-label="Kapat">✕</button></header><div class="modal-body"><div id="ai-tools-grid" class="ai-tools-grid"></div><p class="weather-meta" style="margin-top:8px;">Kısayol: Ctrl/Cmd + K</p></div></dialog>
+    <dialog id="settings-modal" aria-labelledby="settings-title"><header class="modal-header"><h3 id="settings-title" class="modal-title">Ayarlar</h3><button class="modal-close-btn" aria-label="Kapat">✕</button></header><div class="modal-body"> <section class="settings-section"> <details open><summary>Tema</summary><div><div id="theme-switcher" class="theme-switcher"></div><div class="settings-row" style="margin-top:10px;"><label><input type="checkbox" id="system-auto"> Sistem Otomatik</label></div></div></details> <details><summary>Görünüm</summary><div> <div class="settings-row"><label for="accent-input">Vurgu Rengi</label><input type="color" id="accent-input"></div> <div class="settings-row"><label for="background-input">Arka Plan URL</label><input type="url" id="background-input" placeholder="https://source.unsplash.com/random/1920x1080"></div> <div class="settings-row"><label for="blur-input">Bulanıklık</label><input type="range" id="blur-input" min="0" max="32" step="1"></div> <div class="settings-row"><label for="opacity-input">Opaklık</label><input type="range" id="opacity-input" min="0.1" max="1" step="0.05"></div> <div class="settings-row"><label><input type="checkbox" id="hide-greeting"> Selamlamayı Gizle</label></div> <div class="settings-row"><label><input type="checkbox" id="hide-date"> Tarihi Gizle</label></div> </div></details> <details><summary>Veri</summary><div><div class="settings-row"> <button id="export-btn" class="btn-icon btn-primary" title="Dışa aktar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></button> <label class="badge" for="import-file" style="cursor:pointer;">İçe Aktar</label><input id="import-file" type="file" accept="application/json" class="sr-only"> <button id="reset-btn" class="btn-icon" title="Varsayılanlara dön"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button> </div></div></details> </section> </div><div class="modal-actions"><button class="btn-icon btn-primary" data-close>Kapat</button></div></dialog>
+    <dialog id="shortcut-modal" aria-labelledby="shortcut-modal-title"><header class="modal-header"><h3 id="shortcut-modal-title" class="modal-title">Kısayol</h3><button class="modal-close-btn" aria-label="Kapat">✕</button></header><div class="modal-body"><form id="shortcut-form" class="form-grid"><div class="field"><label for="s-title">Başlık</label><input id="s-title" name="title" required placeholder="Örn: GitHub"></div><div class="field"><label for="s-url">URL</label><input id="s-url" name="url" type="url" required placeholder="https://..."></div><div class="field"><label for="s-icon">Simge (emoji)</label><input id="s-icon" name="icon" placeholder="💻"></div><div class="field"><label for="s-index">Sıra (opsiyonel)</label><input id="s-index" name="index" type="number" min="0" placeholder="0"></div><input type="hidden" id="s-edit-id" name="editId" value=""></form></div><div class="modal-actions"><button id="shortcut-cancel" class="btn-icon">İptal</button><button id="shortcut-save" class="btn-icon btn-primary">Kaydet</button></div></dialog>
+    <dialog id="help-modal" aria-labelledby="help-title"><header class="modal-header"><h3 id="help-title" class="modal-title">Yardım & Komutlar</h3><button class="modal-close-btn" aria-label="Kapat">✕</button></header><div class="modal-body"><h4>Slash Komutları</h4><ul><li>/g, /ddg, /yt, /bing [sorgu]</li><li>/gh [kullanıcı/repo] — GitHub</li><li>/so [sorgu] — Stack Overflow</li><li>/r [subreddit] — Reddit</li><li>/w [şehir] — Hava durumu</li></ul><h4>Klavye</h4><ul><li>/ — Arama kutusuna odakla</li><li>Ctrl/Cmd + K — AI Araçları</li><li>t — Ayarlar</li><li>? — Yardım</li><li>Esc — Açık modalı kapat</li></ul></div></dialog>
+    <div id="toasts" class="toasts" aria-live="polite"></div>
+
+    <script>
+      (() => {
+        // -------------------
+        //
+        // 1. STATE & STORAGE
+        //
+        // -------------------
+        const Store = {
+          get: (key, def) => {
+            try {
+              const raw = localStorage.getItem(key);
+              return raw ? JSON.parse(raw) : def;
+            } catch {
+              return def;
+            }
+          },
+          set: (key, val) => {
+            try {
+              localStorage.setItem(key, JSON.stringify(val));
+            } catch (e) {
+              console.error("Error saving to localStorage", e);
+            }
+          },
+          export: () => {
+            const settings = {};
+            Object.keys(state.defaults).forEach(key => settings[key] = Store.get(key));
+            return settings;
+          },
+          import: (data) => {
+            Object.entries(data).forEach(([k, v]) => Store.set(k, v));
+          }
+        };
+
+        const state = {
+          defaults: {
+            userName: 'EUUI Kullanıcısı',
+            userTitle: 'Geliştirici',
+            profilePicUrl: 'https://i.pravatar.cc/150?u=euui', // Rastgele profil resmi için placeholder
+            shortcuts: [
+              { id: crypto.randomUUID(), title: 'GitHub', url: 'https://github.com', icon: '💻' },
+              { id: crypto.randomUUID(), title: 'YouTube', url: 'https://youtube.com', icon: '🎬' },
+              { id: crypto.randomUUID(), title: 'ChatGPT', url: 'https://chat.openai.com', icon: '🤖' }
+            ],
+            theme: 'everforest-dark',
+            themeAuto: false,
+            accent: '#a7c080',
+            engine: 'google',
+            weatherLocation: null,
+            collapsed: {},
+            notepadContent: '',
+            backgroundUrl: '',
+            widgetBlur: 16,
+            widgetOpacity: 0.75,
+            hideGreeting: false,
+            hideDate: false,
+          },
+          editShortcuts: false
+        };
+
+        // -------------------
+        //
+        // 2. CONSTANTS
+        //
+        // -------------------
+        const THEMES = [
+          { id: 'everforest-dark', name: 'Everforest', colors: ['#a7c080', '#d699b6', '#343f44'] },
+          { id: 'rose-pine', name: 'Rosé Pine', colors: ['#9ccfd8', '#c4a7e7', '#1f1d2e'] },
+          { id: 'monokai', name: 'Monokai', colors: ['#66D9EF', '#F92672', '#2D2A2E'] },
+          { id: 'tokyo-night', name: 'Tokyo Night', colors: ['#7dcfff', '#bb9af7', '#1f2335'] },
+          { id: 'charcoal', name: 'Charcoal', colors: ['#4aabff', '#ff4a80', '#282828'] },
+          { id: 'github-light', name: 'GitHub Light', colors: ['#0366d6', '#d73a49', '#ffffff'] },
+        ];
+        const ENGINES = [
+          { id:'google', label:'Google', url:(q)=>`https://www.google.com/search?q=${encodeURIComponent(q)}` },
+          { id:'duckduckgo', label:'DDG', url:(q)=>`https://duckduckgo.com/?q=${encodeURIComponent(q)}` },
+          { id:'youtube', label:'YouTube', url:(q)=>`https://www.youtube.com/results?search_query=${encodeURIComponent(q)}` },
+          { id:'bing', label:'Bing', url:(q)=>`https://www.bing.com/search?q=${encodeURIComponent(q)}` },
+          { id:'github', label:'GitHub', url:(q)=>`https://github.com/search?q=${encodeURIComponent(q)}` },
+          { id:'stackoverflow', label:'StackOF', url:(q)=>`https://stackoverflow.com/search?q=${encodeURIComponent(q)}` }
+        ];
+        const WeatherIcons = {0:'☀️',1:'🌤️',2:'🌥️',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌦️',61:'🌧️',63:'🌧️',65:'🌧️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
+        const $ = (sel, root=document)=>root.querySelector(sel);
+        const $$ = (sel, root=document)=>Array.from(root.querySelectorAll(sel));
+
+        // -------------------
+        //
+        // 3. UI MODULE
+        //
+        // -------------------
+        const UI = {
+          init() {
+            this.DOM = {
+              html: document.documentElement,
+              time: $('#time'),
+              date: $('#date'),
+              greeting: $('#greeting'),
+              profilePic: $('#profile-pic'), // YENİ
+              quoteText: $('#quote-text'), // YENİ
+              searchInput: $('#q'),
+              searchBtn: $('#search-btn'),
+              engineChip: $('#engine-chip'),
+              micBtn: $('#mic-btn'),
+              shortcutsContainer: $('#shortcuts-container'),
+              shortcutsEditBtn: $('#shortcuts-edit-btn'),
+              shortcutAddBtn: $('#shortcut-add-btn'),
+              aiToolsBtn: $('#ai-tools-btn'),
+              aiToolsModal: $('#ai-tools-modal'),
+              aiToolsGrid: $('#ai-tools-grid'),
+              settingsFab: $('#settings-fab'),
+              settingsModal: $('#settings-modal'),
+              themeSwitcher: $('#theme-switcher'),
+              systemAutoChk: $('#system-auto'),
+              accentInput: $('#accent-input'),
+              backgroundInput: $('#background-input'),
+              blurInput: $('#blur-input'),
+              opacityInput: $('#opacity-input'),
+              hideGreetingChk: $('#hide-greeting'),
+              hideDateChk: $('#hide-date'),
+              exportBtn: $('#export-btn'),
+              importFile: $('#import-file'),
+              resetBtn: $('#reset-btn'),
+              weatherLocBtn: $('#weather-loc-btn'),
+              weatherLocLabel: $('#weather-location-label'),
+              weatherIcon: $('#w-icon'),
+              weatherTemp: $('#w-temp'),
+              weatherMeta: $('#w-meta'),
+              weatherUpdated: $('#w-updated'),
+              forecast: $('#forecast'),
+              collapsers: $$('[data-collapse]'),
+              shortcutModal: $('#shortcut-modal'),
+              shortcutForm: $('#shortcut-form'),
+              shortcutSave: $('#shortcut-save'),
+              shortcutCancel: $('#shortcut-cancel'),
+              helpModal: $('#help-modal'),
+              toasts: $('#toasts'),
+              notepad: $('#notepad')
+            };
+            this.staggerLoad();
+          },
+          staggerLoad() {
+            $$('.widget').forEach((el, i) => setTimeout(() => el.style.opacity = '1', 100 * (i + 1)));
+          },
+          Toast: {
+            show(msg, type='info') {
+              const el = document.createElement('div');
+              el.className = `toast ${type}`;
+              const icon = type === 'success' ? '✓' : type === 'warn' ? '⚠️' : 'ℹ️';
+              el.innerHTML = `<span class="toast-icon">${icon}</span><span>${msg}</span>`;
+              UI.DOM.toasts.appendChild(el);
+              setTimeout(() => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(10px)';
+              }, 3000);
+              setTimeout(() => el.remove(), 3500);
+            }
+          },
+          openModal(dialog) {
+            if (!dialog.open) dialog.showModal();
+          },
+          closeModal(dialog) {
+            if (dialog.open) dialog.close();
+          },
+          applySetting(key, value) {
+            const root = this.DOM.html;
+            switch(key) {
+              case 'accent': root.style.setProperty('--accent-color', value); break;
+              case 'backgroundUrl': root.style.setProperty('--custom-bg-image', value ? `url(${value})` : 'none'); break;
+              case 'widgetBlur': root.style.setProperty('--widget-blur', `${value}px`); break;
+              case 'widgetOpacity': root.style.setProperty('--widget-opacity', value); break;
+              case 'hideGreeting': document.body.classList.toggle('hide-greeting', value); break;
+              case 'hideDate': document.body.classList.toggle('hide-date', value); break;
+              case 'theme': root.dataset.theme = value; break;
+              case 'profilePicUrl': UI.DOM.profilePic.src = value; break; // YENİ
+            }
+          },
+        };
+
+        // -------------------
+        //
+        // 4. MODULES
+        //
+        // -------------------
+        const Clock = {
+          update() {
+            const now = new Date();
+            UI.DOM.time.textContent = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+            UI.DOM.date.textContent = now.toLocaleDateString('tr-TR', { weekday:'long', day:'numeric', month:'long' });
+            const hour = now.getHours();
+            const g = (hour < 5) ? "Yıldızlara selam" : (hour < 12) ? "Günaydın" : (hour < 18) ? "Tünaydın" : "İyi akşamlar";
+            // YENİ: Karşılama mesajı güncellendi
+            const userName = Store.get('userName', state.defaults.userName);
+            const userTitle = Store.get('userTitle', state.defaults.userTitle);
+            UI.DOM.greeting.innerHTML = `<strong>${g}, ${userName}!</strong><br><span style="font-size: .9rem; color: var(--muted);">${userTitle}</span>`;
+          },
+          init() {
+            this.update();
+            setInterval(this.update, 1000);
+          }
+        };
+
+        // YENİ MODÜL: Alıntılar
+        const Quotes = {
+  async fetchAndDisplay() {
+    try {
+      const response = await fetch('Alıntılar.json'); // aynı klasörde olmalı
+      if (!response.ok) throw new Error('Network response was not ok');
+      
+      const quotes = await response.json();
+      const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+      
+      // UI.DOM.quoteText öğesi varsa doldur
+      if (UI?.DOM?.quoteText) {
+        UI.DOM.quoteText.textContent = `"${randomQuote.text}" — ${randomQuote.author}`;
+      }
+    } catch (error) {
+      console.error('Alıntı yüklenemedi:', error);
+      if (UI?.DOM?.quoteText) {
+        UI.DOM.quoteText.textContent =
+          '"Başlamak için harika olmanıza gerek yok, ama harika olmak için başlamanız gerekir."';
+      }
+    }
+  },
+  init() {
+    this.fetchAndDisplay();
+    // arrow function kullanarak bağlamı koruyoruz
+    setInterval(() => this.fetchAndDisplay(), 60000);
+  }
+};
+
+
+        const Theme = {
+          apply(themeId) {
+            UI.applySetting('theme', themeId);
+            Store.set('theme', themeId);
+            $$('.theme-option').forEach(opt => opt.classList.toggle('active', opt.dataset.themeId === themeId));
+          },
+          renderOptions() {
+            UI.DOM.themeSwitcher.innerHTML = THEMES.map(t => `<div class="theme-option" data-theme-id="${t.id}" role="button" aria-label="${t.name}"><div class="theme-name">${t.name}</div><div class="theme-preview"><span style="background:${t.colors[0]}"></span><span style="background:${t.colors[1]}"></span><span style="background:${t.colors[2]}"></span></div></div>`).join('');
+          },
+          handleSystem() {
+            if (!Store.get('themeAuto')) return;
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            this.apply(prefersDark ? 'everforest-dark' : 'github-light');
+          },
+          init() {
+            this.renderOptions();
+            UI.DOM.systemAutoChk.checked = Store.get('themeAuto', state.defaults.themeAuto);
+            this.handleSystem();
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => this.handleSystem());
+          }
+        };
+
+        const Search = {
+          init() {
+            this.engineIndex = Math.max(0, ENGINES.findIndex(e => e.id === Store.get('engine', state.defaults.engine)));
+            this.setEngine(this.engineIndex);
+          },
+          setEngine(idx) {
+            this.engineIndex = (idx + ENGINES.length) % ENGINES.length;
+            const current = ENGINES[this.engineIndex];
+            UI.DOM.engineChip.textContent = current.label;
+            Store.set('engine', current.id);
+          },
+          cycleEngine() {
+            this.setEngine(this.engineIndex + 1);
+          },
+          execute() {
+            const query = UI.DOM.searchInput.value.trim();
+            if (!query) return;
+            if (query.startsWith('/')) {
+              this.runCommand(query);
+              return;
+            }
+            location.href = ENGINES[this.engineIndex].url(query);
+          },
+          runCommand(input) {
+            const [cmd, ...restArr] = input.slice(1).trim().split(/\s+/);
+            const rest = restArr.join(' ');
+            switch (cmd) {
+              case 'g': location.href = ENGINES[0].url(rest); break;
+              case 'ddg': location.href = ENGINES[1].url(rest); break;
+              case 'yt': location.href = ENGINES[2].url(rest); break;
+              case 'bing': location.href = ENGINES[3].url(rest); break;
+              case 'gh': location.href = `https://github.com/search?q=${encodeURIComponent(rest)}`; break;
+              case 'so': location.href = ENGINES[5].url(rest); break;
+              case 'r': location.href = `https://www.reddit.com/r/${encodeURIComponent(rest || 'popular')}`; break;
+              case 'w': if (rest) { Weather.setCity(rest); } else UI.Toast.show('Şehir adı girin: /w İstanbul', 'warn'); break;
+              default: UI.Toast.show('Bilinmeyen komut. ? ile yardım', 'warn');
+            }
+          }
+        };
+
+        const Shortcuts = {
+          render() {
+            const shortcuts = Store.get('shortcuts', state.defaults.shortcuts);
+            const editing = state.editShortcuts;
+            UI.DOM.shortcutsContainer.classList.toggle('shortcuts-editing', editing);
+            UI.DOM.shortcutsContainer.innerHTML = shortcuts.map(s => `<a href="${editing ? '#' : s.url}" target="${editing ? '' : '_blank'}" class="shortcut-card" draggable="${editing}" data-id="${s.id}" title="${s.title}"><button class="shortcut-remove" title="Sil">×</button><div class="shortcut-icon">${s.icon || '★'}</div><span class="shortcut-title">${s.title}</span></a>`).join('');
+            if (editing) this.addDragDropHandlers();
+          },
+          addDragDropHandlers() {
+            $$('.shortcut-card', UI.DOM.shortcutsContainer).forEach(c => { c.addEventListener('dragstart', (e) => { e.target.classList.add('dragging'); e.dataTransfer.setData('text/plain', e.target.dataset.id); }); c.addEventListener('dragend', (e) => e.target.classList.remove('dragging')); });
+            UI.DOM.shortcutsContainer.addEventListener('dragover', e => { e.preventDefault(); const after = [...UI.DOM.shortcutsContainer.querySelectorAll('.shortcut-card:not(.dragging)')].reduce((c, ch) => { const box=ch.getBoundingClientRect(); const offset=e.clientY - box.top - box.height/2; return (offset < 0 && offset > c.offset) ? {offset:offset,element:ch} : c; }, {offset:Number.NEGATIVE_INFINITY}).element; const dr=UI.DOM.shortcutsContainer.querySelector('.dragging'); if (after==null) UI.DOM.shortcutsContainer.appendChild(dr); else UI.DOM.shortcutsContainer.insertBefore(dr,after);});
+            UI.DOM.shortcutsContainer.addEventListener('drop', () => { const newOrder = [...UI.DOM.shortcutsContainer.querySelectorAll('.shortcut-card')].map(c => c.dataset.id); let shortcuts = Store.get('shortcuts'); shortcuts.sort((a,b) => newOrder.indexOf(a.id) - newOrder.indexOf(b.id)); Store.set('shortcuts', shortcuts); });
+          },
+          openEdit(s) {
+            const form = UI.DOM.shortcutForm;
+            form.reset();
+            form.title.value = s.title;
+            form.url.value = s.url;
+            form.icon.value = s.icon || '';
+            form.index.value = Store.get('shortcuts').indexOf(s);
+            form.editId.value = s.id;
+            $('#shortcut-modal-title').textContent = 'Kısayol Düzenle';
+            UI.openModal(UI.DOM.shortcutModal);
+          },
+          save() {
+            const fd = new FormData(UI.DOM.shortcutForm);
+            const data = Object.fromEntries(fd.entries());
+            if (!data.title || !data.url) {
+              UI.Toast.show('Başlık ve URL gerekli', 'warn');
+              return;
+            }
+            let shortcuts = Store.get('shortcuts');
+            if (data.editId) {
+              const idx = shortcuts.findIndex(s => s.id === data.editId);
+              if (idx > -1) shortcuts[idx] = {...shortcuts[idx], title:data.title, url:data.url, icon: data.icon};
+            } else {
+              shortcuts.push({id:crypto.randomUUID(), title:data.title, url:data.url, icon: data.icon || '🔗'});
+            }
+            Store.set('shortcuts', shortcuts);
+            this.render();
+            UI.closeModal(UI.DOM.shortcutModal);
+            UI.Toast.show('Kısayol kaydedildi', 'success');
+          },
+          init() {
+            this.render();
+            UI.DOM.shortcutsContainer.addEventListener('click', e => {
+              if (!state.editShortcuts) return;
+              const card = e.target.closest('.shortcut-card');
+              if (!card) return;
+              e.preventDefault();
+              const id = card.dataset.id;
+              if (e.target.closest('.shortcut-remove')) {
+                let shortcuts = Store.get('shortcuts');
+                Store.set('shortcuts', shortcuts.filter(s => s.id !== id));
+                this.render();
+                UI.Toast.show('Kısayol silindi.');
+              } else {
+                const s = Store.get('shortcuts').find(s => s.id === id);
+                this.openEdit(s);
+              }
+            });
+          }
+        };
+
+        const Notepad = {
+          init() {
+            UI.DOM.notepad.value = Store.get('notepadContent', state.defaults.notepadContent);
+            UI.DOM.notepad.addEventListener('input', () => Store.set('notepadContent', UI.DOM.notepad.value));
+          }
+        };
+
+        const Weather = {
+          setCity: async function(city) {
+            try {
+              const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=tr&format=json`);
+              const data = await res.json();
+              if (!data.results?.length) {
+                UI.Toast.show('Şehir bulunamadı', 'warn');
+                return;
+              }
+              const r = data.results[0];
+              Store.set('weatherLocation', { mode:'city', name: `${r.name}, ${r.country}`, lat: r.latitude, lon: r.longitude });
+              UI.Toast.show(`Konum: ${r.name}`, 'success');
+              this.update();
+            } catch {
+              UI.Toast.show('Konum alınamadı', 'warn');
+            }
+          },
+          update: async function() {
+            const loc = Store.get('weatherLocation');
+            if (!loc) {
+              UI.DOM.weatherIcon.textContent = '📍';
+              UI.DOM.weatherTemp.textContent = 'Konum Seç';
+              return;
+            }
+            UI.DOM.weatherLocLabel.textContent = loc.name;
+            try {
+              const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${loc.lat}&longitude=${loc.lon}&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`);
+              const data = await res.json();
+              const cur = data.current;
+              const d = data.daily;
+              UI.DOM.weatherIcon.textContent = WeatherIcons[cur.weather_code] || '🌀';
+              UI.DOM.weatherTemp.textContent = `${Math.round(cur.temperature_2m)}°C`;
+              UI.DOM.weatherMeta.textContent = `En Yüksek: ${Math.round(d.temperature_2m_max[0])}°`;
+              UI.DOM.weatherUpdated.textContent = `Güncel: ${new Date().toLocaleTimeString('tr-TR', { hour:'2-digit', minute:'2-digit' })}`;
+              UI.DOM.forecast.innerHTML = d.time.slice(1,6).map((t,i) => `<div class="forecast-day"><div>${new Date(t).toLocaleDateString('tr-TR',{weekday:'short'})}</div><div style="font-size:1.4rem">${WeatherIcons[d.weather_code[i+1]]}</div><div><strong>${Math.round(d.temperature_2m_max[i+1])}°</strong></div></div>`).join('');
+            } catch {
+              UI.Toast.show('Hava durumu alınamadı', 'warn');
+            }
+          },
+          init() {
+            this.update();
+            setInterval(() => this.update(), 1800000); // 30 min refresh
+          }
+        };
+
+        // -------------------
+        //
+        // 5. EVENT LISTENERS
+        //
+        // -------------------
+        function setupEventListeners() {
+          document.addEventListener('click', e => {
+            if (e.target.closest('#settings-fab')) UI.openModal(UI.DOM.settingsModal);
+            if (e.target.closest('#ai-tools-btn')) UI.openModal(UI.DOM.aiToolsModal);
+            if (e.target.closest('.modal-close-btn')) UI.closeModal(e.target.closest('dialog'));
+            if (e.target.matches('dialog')) UI.closeModal(e.target);
+            if (e.target.closest('[data-close]')) UI.closeModal(e.target.closest('dialog'));
+            if (e.target.closest('#engine-chip')) Search.cycleEngine();
+            if (e.target.closest('#search-btn')) Search.execute();
+            if (e.target.closest('#shortcuts-edit-btn')) {
+              state.editShortcuts = !state.editShortcuts;
+              Shortcuts.render();
+              UI.Toast.show(state.editShortcuts ? 'Düzenleme modu açık' : 'Düzenleme modu kapalı');
+            }
+            if (e.target.closest('#shortcut-add-btn')) {
+              UI.DOM.shortcutForm.reset();
+              $('#shortcut-modal-title').textContent = 'Kısayol Ekle';
+              UI.openModal(UI.DOM.shortcutModal);
+            }
+            if (e.target.closest('#shortcut-save')) Shortcuts.save();
+            if (e.target.closest('#shortcut-cancel')) UI.closeModal(UI.DOM.shortcutModal);
+            if (e.target.closest('.theme-option')) {
+              UI.DOM.systemAutoChk.checked = false;
+              Store.set('themeAuto', false);
+              Theme.apply(e.target.closest('.theme-option').dataset.themeId);
+            }
+            if (e.target.closest('#weather-loc-btn')) {
+              const city = prompt('Şehir adı girin (örn: İstanbul) veya boş bırakıp GPS kullanın.');
+              if (city) Weather.setCity(city);
+            }
+            if (e.target.closest('#export-btn')) {
+              const blob = new Blob([JSON.stringify(Store.export(), null, 2)], { type: 'application/json' });
+              const a = document.createElement('a');
+              a.href = URL.createObjectURL(blob);
+              a.download = 'euui-settings.json';
+              a.click();
+              URL.revokeObjectURL(a.href);
+              UI.Toast.show('Ayarlar dışa aktarıldı', 'success');
+            }
+            if (e.target.closest('#reset-btn')) {
+              if (confirm('Tüm ayarları sıfırlamak istiyor musunuz?')) {
+                localStorage.clear();
+                location.reload();
+              }
+            }
+            // YENİ: Profil Bilgilerini Güncelleme
+            if (e.target.closest('#greeting')) {
+                const name = prompt('Yeni isim?', Store.get('userName'));
+                if (name) Store.set('userName', name.trim());
+                
+                const title = prompt('Yeni unvan?', Store.get('userTitle'));
+                if (title) Store.set('userTitle', title.trim());
+
+                if(name || title) {
+                    Clock.update();
+                    UI.Toast.show('Profil güncellendi', 'success');
+                }
+            }
+            if (e.target.closest('#profile-pic')) {
+                const url = prompt('Yeni profil resmi URL?', Store.get('profilePicUrl'));
+                if(url) {
+                    Store.set('profilePicUrl', url.trim());
+                    UI.applySetting('profilePicUrl', url.trim());
+                    UI.Toast.show('Profil resmi güncellendi', 'success');
+                }
+            }
+          });
+
+          UI.DOM.searchInput.addEventListener('keydown', e => {
+            if (e.key === 'Enter') Search.execute();
+          });
+          UI.DOM.systemAutoChk.addEventListener('change', e => {
+            Store.set('themeAuto', e.target.checked);
+            Theme.handleSystem();
+          });
+          UI.DOM.importFile.addEventListener('change', e => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = () => {
+              try {
+                Store.import(JSON.parse(reader.result));
+                location.reload();
+              } catch {
+                UI.Toast.show('Geçersiz ayar dosyası', 'warn');
+              }
+            };
+            reader.readAsText(file);
+          });
+          // Ayar Inputları
+          ['accentInput', 'backgroundInput', 'blurInput', 'opacityInput', 'hideGreetingChk', 'hideDateChk'].forEach(id => {
+            const el = UI.DOM[id];
+            const key = id.replace(/Input|Chk/, '');
+            const isCheckbox = el.type === 'checkbox';
+            el.addEventListener('input', () => {
+              const value = isCheckbox ? el.checked : el.value;
+              UI.applySetting(key, value);
+              Store.set(key, value);
+            });
+          });
+          window.addEventListener('keydown', e => {
+            if (e.key === 'Escape') $$('dialog').forEach(d => UI.closeModal(d));
+            if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+              e.preventDefault();
+              UI.DOM.searchInput.focus();
+            }
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+              e.preventDefault();
+              UI.openModal(UI.DOM.aiToolsModal);
+            }
+            if (e.key === '?' && document.activeElement.tagName !== 'INPUT') {
+              UI.openModal(UI.DOM.helpModal);
+            }
+          });
+        }
+
+        // -------------------
+        //
+        // 6. INITIALIZATION
+        //
+        // -------------------
+        function init() {
+          UI.init();
+
+          // Tüm ayarları yükle ve uygula
+          Object.keys(state.defaults).forEach(key => {
+            const value = Store.get(key, state.defaults[key]);
+            UI.applySetting(key, value);
+            // Ayarlar modalındaki inputları da doldur
+            const inputId = key + (typeof value === 'boolean' ? 'Chk' : 'Input');
+            if (UI.DOM[inputId]) {
+              UI.DOM[inputId][typeof value === 'boolean' ? 'checked' : 'value'] = value;
+            }
+          });
+
+          Theme.init();
+          Clock.init();
+          Search.init();
+          Shortcuts.init();
+          Notepad.init();
+          Weather.init();
+          Quotes.init(); // YENİ: Alıntıları başlat
+          setupEventListeners();
+
+          // AI Tools (Basit render)
+          UI.DOM.aiToolsGrid.innerHTML = [
+            { name: 'ChatGPT', url: 'https://chat.openai.com', icon: '🤖', color: '#74A79A' },
+            { name: 'Gemini', url: 'https://gemini.google.com', icon: '✨', color: '#89B4F8' },
+            { name: 'Perplexity', url: 'https://www.perplexity.ai', icon: '❓', color: '#A7F3D0' }
+          ].map(tool => `<a href="${tool.url}" target="_blank" class="ai-tool-card"><div class="ai-tool-icon" style="background-color:${tool.color}; color:#111;">${tool.icon}</div><span class="ai-tool-name">${tool.name}</span></a>`).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+      })();
+    </script>
+</body>
+</html>
