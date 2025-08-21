@@ -42,10 +42,33 @@
       background: #2a2a2a;
       transform: translateY(-2px);
     }
+    .construction {
+      margin-top: 30px;
+      text-align: center;
+      color: #aaa;
+      animation: fadeIn 1.5s ease-in;
+    }
+    .gear {
+      margin: 0 auto 10px;
+      width: 40px;
+      height: 40px;
+      border: 6px solid #444;
+      border-top: 6px solid #f39c12;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
     footer {
       margin-top: auto;
       font-size: 0.85rem;
       color: #666;
+      text-align: center;
     }
   </style>
 </head>
@@ -55,11 +78,16 @@
     <a href="Gem3.html">Ana Sayfa EUUI 7 ☼ Pars Sürümü</a>
     <a href="Test%20Sayfası.html">Eski Sürüm</a>
     <a href="Alıntılar.json">Alıntılar (JSON Dosyası)</a>
-    <a href="outdated/">Eski Sürümler (outdated/) -Yakında koyarım-</a>
+    <a href="outdated/">Eski Sürümler (outdated/)</a>
   </div>
+
+  <div class="construction">
+    <div class="gear"></div>
+    <p>Yakında koyarım... Sayfa inşa ediliyor 🛠️</p>
+  </div>
+
   <footer>
-    Nerden buldun la beni? 232320082025Çar blok burdaydı...
+    Nerden buldun la beni? 232320082025Çar<br>blok burdaydı...
   </footer>
 </body>
 </html>
-
