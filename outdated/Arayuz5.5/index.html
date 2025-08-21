@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kişisel arayüz uygulaması - v5.5">
+  <title>🚀 𝓔𝓤𝓤𝓘 𝒗𝟓.𝟓 ✨</title>
+  <link rel="icon" href="../arayüz4.5/images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script defer src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script defer src="script.js"></script>
+</head>
+<body class="theme-default">
+  <!-- Arka plan efektleri -->
+  <div class="background-effects">
+    <div id="particles-js"></div>
+    <div class="gradient-overlay"></div>
+  </div>
+
+  <!-- Ana konteyner -->
+  <div class="app-container">
+    <!-- Üst menü -->
+    <header class="top-header">
+      <div class="logo-container">
+        <img src="../arayüz4.5/images/logo.png" alt="Logo" class="logo-image">
+        <div class="logo-text">EUUI <span>5.5</span></div>
+      </div>
+      <div class="header-controls">
+        <div class="time-display">
+          <div id="time" class="time">00:00:00</div>
+          <div id="date" class="date">1 Ocak 2024</div>
+        </div>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Tema değiştir">
+          <i class="fas fa-palette"></i>
+        </button>
+        <button id="settings-toggle" class="settings-toggle" aria-label="Ayarlar">
+          <i class="fas fa-cog"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Ana içerik -->
+    <main class="main-content">
+      <!-- Sol sidebar -->
+      <nav class="sidebar">
+        <div class="nav-items">
+          <div class="nav-item active" data-section="dashboard">
+            <i class="fas fa-home"></i>
+            <span>Ana Sayfa</span>
+          </div>
+          <div class="nav-item" data-section="games">
+            <i class="fas fa-gamepad"></i>
+            <span>Oyunlar</span>
+          </div>
+          <div class="nav-item" data-section="tools">
+            <i class="fas fa-tools"></i>
+            <span>Araçlar</span>
+          </div>
+          <div class="nav-item" data-section="music">
+            <i class="fas fa-music"></i>
+            <span>Müzik & Haberler</span>
+          </div>
+        </div>
+        <div class="sidebar-footer">
+          <div class="user-info">
+            <span>EU435 Tarafından yapılmıştır</span>
+            <span class="version">Versiyon 5.5</span>
+          </div>
+        </div>
+      </nav>
+
+      <!-- İçerik alanı -->
+      <div class="content-area">
+        <!-- Karşılama bölümü -->
+        <section class="welcome-section">
+          <h1 id="greeting" class="greeting">Merhaba 𐰀𐰼𐰴𐰀𐰣</h1>
+          <div class="tagline-container">
+            <div class="tagline active">Zulme Karşı Mukavemet!</div>
+            <div class="tagline">Yaşasın Vatan!</div>
+            <div class="tagline">Vatan olsa ne rütbe-i perva genede dünyada zulmü yıkarız.</div>
+            <div class="tagline">Merkez-i Arz'ada atsalar bizi küre-i Arz'ı patlatır çıkarız</div>
+          </div>
+        </section>
+
+        <!-- Bölümler -->
+        <div class="sections-container">
+          <!-- Dashboard Section -->
+          <section id="dashboard" class="section active">
+            <div class="dashboard-grid">
+              <!-- Hızlı erişim kartı -->
+              <div class="card quick-access-card">
+                <div class="card-header">
+                  <i class="fas fa-bolt"></i>
+                  <h2>Hızlı Erişim</h2>
+                </div>
+                <div class="card-content">
+                  <div class="quick-links">
+                    <button class="action-button" onclick="window.open('https://chat.openai.com/', '_blank')">
+                      <i class="fas fa-robot"></i>
+                      <span>ChatGPT</span>
+                    </button>
+                    <button class="action-button" onclick="window.open('https://www.youtube.com/', '_blank')">
+                      <i class="fab fa-youtube"></i>
+                      <span>YouTube</span>
+                    </button>
+                    <button class="action-button" onclick="window.open('https://github.com/', '_blank')">
+                      <i class="fab fa-github"></i>
+                      <span>GitHub</span>
+                    </button>
+                    <button class="action-button" onclick="window.open('https://mail.google.com', '_blank')">
+                      <i class="fas fa-envelope"></i>
+                      <span>Gmail</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Hava durumu kartı -->
+              <div class="card weather-card">
+                <div class="card-header">
+                  <i class="fas fa-cloud-sun"></i>
+                  <h2>Hava Durumu</h2>
+                </div>
+                <div class="card-content">
+                  <div class="weather-info">
+                    <div class="weather-main">
+                      <i id="weatherIcon" class="fas fa-cloud"></i>
+                      <div class="weather-temp">
+                        <span id="weatherTemp">--°C</span>
+                        <span id="weatherCondition">Yükleniyor...</span>
+                      </div>
+                    </div>
+                    <div class="weather-details">
+                      <div class="weather-detail">
+                        <i class="fas fa-tint"></i>
+                        <span>Nem: <span id="weatherHumidity">--%</span></span>
+                      </div>
+                      <div class="weather-detail">
+                        <i class="fas fa-wind"></i>
+                        <span>Rüzgar: <span id="weatherWind">-- km/s</span></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Notlar kartı -->
+              <div class="card notes-card">
+                <div class="card-header">
+                  <i class="fas fa-sticky-note"></i>
+                  <h2>Notlar</h2>
+                </div>
+                <div class="card-content">
+                  <textarea id="notes" placeholder="Notlarınızı buraya yazın..."></textarea>
+                  <button class="save-button" onclick="saveNotes()">Kaydet</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Games Section -->
+          <section id="games" class="section">
+            <h2 class="section-title">Oyunlar</h2>
+            <div class="games-grid">
+              <!-- Zeka Oyunları -->
+              <div class="card games-card">
+                <div class="card-header">
+                  <i class="fas fa-brain"></i>
+                  <h2>Zeka Oyunları</h2>
+                </div>
+                <div class="card-content">
+                  <div class="game-buttons">
+                    <button class="game-button" disabled><i class="fas fa-th"></i> Sudoku</button>
+                    <button class="game-button" onclick="window.open('https://chess.com/', '_blank')"><i class="fas fa-chess"></i> Satranç</button>
+                    <button class="game-button" onclick="window.location.href='../arayüz4.5/Kelime-oyunu-v1.5.html'"><i class="fas fa-book"></i> Kelimelik</button>
+                    <button class="game-button" onclick="window.open('https://www.puzzle-nonograms.com/', '_blank')"><i class="fas fa-puzzle-piece"></i> Nonogram</button>
+                    <button class="game-button" onclick="window.open('https://www.jigsawplanet.com/', '_blank')"><i class="fas fa-image"></i> Yapboz</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Aksiyon Oyunları -->
+              <div class="card games-card">
+                <div class="card-header">
+                  <i class="fas fa-bolt"></i>
+                  <h2>Aksiyon Oyunları</h2>
+                </div>
+                <div class="card-content">
+                  <div class="game-buttons">
+                    <button class="game-button" onclick="window.open('https://krunker.io/', '_blank')"><i class="fas fa-crosshairs"></i> Krunker.io</button>
+                    <button class="game-button" onclick="window.open('https://slither.io/', '_blank')"><i class="fas fa-snake"></i> Slither.io</button>
+                    <button class="game-button" onclick="window.open('https://agar.io/', '_blank')"><i class="fas fa-circle"></i> Agar.io</button>
+                    <button class="game-button" onclick="window.open('https://surviv.io/', '_blank')"><i class="fas fa-shield-alt"></i> Surviv.io</button>
+                    <button class="game-button" onclick="window.open('https://diep.io/', '_blank')"><i class="fas fa-tank"></i> Diep.io</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Strateji Oyunları -->
+              <div class="card games-card">
+                <div class="card-header">
+                  <i class="fas fa-chess-knight"></i>
+                  <h2>Strateji Oyunları</h2>
+                </div>
+                <div class="card-content">
+                  <div class="game-buttons">
+                    <button class="game-button" onclick="window.open('https://generals.io/', '_blank')"><i class="fas fa-map"></i> Generals.io</button>
+                    <button class="game-button" onclick="window.open('https://lichess.org/', '_blank')"><i class="fas fa-chess-board"></i> Lichess</button>
+                    <button class="game-button" onclick="window.open('https://www.coolmathgames.com/0-chess', '_blank')"><i class="fas fa-chess-pawn"></i> Cool Math Chess</button>
+                    <button class="game-button" onclick="window.open('https://www.coolmathgames.com/0-strategy-games', '_blank')"><i class="fas fa-gamepad"></i> Strateji Oyunları</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Tools Section -->
+          <section id="tools" class="section">
+            <h2 class="section-title">Araçlar</h2>
+            <div class="tools-container">
+              <!-- Hızlı Bağlantılar -->
+              <div class="tools-category">
+                <h3 class="category-title">Hızlı Bağlantılar</h3>
+                <div class="tools-grid">
+                  <a href="https://www.google.com/maps" target="_blank" class="tool-link">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Google Haritalar</span>
+                  </a>
+                  <a href="https://translate.google.com/" target="_blank" class="tool-link">
+                    <i class="fas fa-language"></i>
+                    <span>Google Çeviri</span>
+                  </a>
+                  <a href="https://drive.google.com/" target="_blank" class="tool-link">
+                    <i class="fas fa-cloud"></i>
+                    <span>Google Drive</span>
+                  </a>
+                  <a href="https://calendar.google.com/" target="_blank" class="tool-link">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Google Takvim</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Sosyal Medya -->
+              <div class="tools-category">
+                <h3 class="category-title">Sosyal Medya</h3>
+                <div class="tools-grid">
+                  <a href="https://www.youtube.com/" target="_blank" class="tool-link">
+                    <i class="fab fa-youtube"></i>
+                    <span>YouTube</span>
+                  </a>
+                  <a href="https://twitter.com/" target="_blank" class="tool-link">
+                    <i class="fab fa-twitter"></i>
+                    <span>Twitter</span>
+                  </a>
+                  <a href="https://www.instagram.com/" target="_blank" class="tool-link">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                  </a>
+                  <a href="https://www.reddit.com/" target="_blank" class="tool-link">
+                    <i class="fab fa-reddit"></i>
+                    <span>Reddit</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Eğitim -->
+              <div class="tools-category">
+                <h3 class="category-title">Eğitim</h3>
+                <div class="tools-grid">
+                  <a href="https://chat.openai.com/" target="_blank" class="tool-link">
+                    <i class="fas fa-robot"></i>
+                    <span>ChatGPT</span>
+                  </a>
+                  <a href="https://claude.ai/new" target="_blank" class="tool-link">
+                    <i class="fas fa-comment-dots"></i>
+                    <span>ClaudeAI</span>
+                  </a>
+                  <a href="https://gemini.google.com/" target="_blank" class="tool-link">
+                    <i class="fas fa-brain"></i>
+                    <span>Gemini</span>
+                  </a>
+                  <a href="https://eba.gov.tr/" target="_blank" class="tool-link">
+                    <i class="fas fa-school"></i>
+                    <span>EBA</span>
+                  </a>
+                  <a href="https://menderesal.meb.k12.tr/meb_iys_dosyalar/09/11/964277/dosyalar/2025_01/31210338_snfprogram1.pdf" target="_blank" class="tool-link">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Ders Programı</span>
+                  </a>
+                  <a href="https://menderesal.meb.k12.tr/" target="_blank" class="tool-link">
+                    <i class="fas fa-university"></i>
+                    <span>Menderes Anadolu Lisesi</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Görevler -->
+              <div class="card todo-card">
+                <div class="card-header">
+                  <i class="fas fa-tasks"></i>
+                  <h2>Görevler</h2>
+                </div>
+                <div class="card-content">
+                  <div class="todo-form">
+                    <input type="text" id="todoInput" placeholder="Yeni görev ekle...">
+                    <button onclick="addTodo()">Ekle</button>
+                  </div>
+                  <ul id="todoList" class="todo-list"></ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Music and News Section -->
+          <section id="music" class="section">
+            <h2 class="section-title">Müzik ve Haberler</h2>
+            
+            <!-- Müzik Çalar -->
+            <div class="card music-player-card">
+              <div class="card-header">
+                <i class="fas fa-music"></i>
+                <h2>Müzik Çalar</h2>
+              </div>
+              <div class="card-content">
+                <div class="music-player">
+                  <div class="player-info">
+                    <div id="trackTitle" class="track-title">Şarkı Adı</div>
+                    <select id="genreFilter" onchange="filterPlaylist()">
+                      <option value="all">Tüm Türler</option>
+                      <option value="Epik">Epik</option>
+                      <option value="Film Müziği">Film Müziği</option>
+                      <option value="Nostaljik">Nostaljik</option>
+                    </select>
+                  </div>
+                  <div class="player-controls">
+                    <button onclick="changeTrack('previous')" aria-label="Önceki şarkı">
+                      <i class="fas fa-backward"></i>
+                    </button>
+                    <button id="playPauseBtn" onclick="togglePlayPause()" aria-label="Oynat veya duraklat">
+                      <i class="fas fa-play"></i>
+                    </button>
+                    <button onclick="changeTrack('next')" aria-label="Sonraki şarkı">
+                      <i class="fas fa-forward"></i>
+                    </button>
+                  </div>
+                  <div class="volume-control">
+                    <i class="fas fa-volume-down"></i>
+                    <input type="range" id="volume" min="0" max="1" step="0.01" value="1" oninput="setVolume()">
+                    <i class="fas fa-volume-up"></i>
+                  </div>
+                  <div class="progress-container">
+                    <div class="progress-bar" onclick="seek(event)">
+                      <div id="progress" class="progress"></div>
+                    </div>
+                  </div>
+                  <button class="playlist-toggle" onclick="togglePlaylist()">
+                    <i class="fas fa-list"></i> Çalma Listesi
+                  </button>
+                  <div id="playlist" class="playlist"></div>
+                  <audio id="audioPlayer" preload="metadata"></audio>
+                </div>
+              </div>
+            </div>
+
+            <!-- Haberler -->
+            <div class="card news-card">
+              <div class="card-header">
+                <i class="fas fa-newspaper"></i>
+                <h2>Son Haberler</h2>
+              </div>
+              <div class="card-content">
+                <div class="news-controls">
+                  <select id="newsCategory" onchange="loadNews()">
+                    <option value="sondakika">Son Dakika</option>
+                    <option value="dunya">Dünya</option>
+                    <option value="spor">Spor</option>
+                    <option value="teknoloji">Teknoloji</option>
+                    <option value="ekonomi">Ekonomi</option>
+                  </select>
+                </div>
+                <div id="newsList" class="news-list"></div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- Ayarlar Paneli -->
+  <div id="settingsPanel" class="settings-panel">
+    <h2>Ayarlar</h2>
+    <form id="settingsForm">
+      <label for="themeSelect">Tema:</label>
+      <select id="themeSelect" onchange="changeTheme()">
+        <option value="default">Varsayılan</option>
+        <option value="dark">Karanlık</option>
+        <option value="light">Aydınlık</option>
+        <option value="turk">Türk</option>
+        <option value="futuretech">FutureTech</option>
+        <option value="turan">Turan</option>
+        <option value="tcdd">TCDD</option>
+        <option value="minecraft">Minecraft</option>
+        <option value="anitkabir">Anıtkabir</option>
+        <option value="istanbul">İstanbul</option>
+        <option value="transformers">Transformers</option>
+        <option value="gradient">Gradyan</option>
+        <option value="starwars">Star Wars</option>
+        <option value="wwii">II. Dünya Savaşı</option>
+        <option value="anime">Anime</option>
+        <option value="space">Uzay</option>
+        <option value="nature">Doğa</option>
+        <option value="ottoman">Osmanlı</option>
+        <option value="minimalist">Minimalist</option>
+        <option value="gaming">Oyun</option>
+        <option value="cyberpunk">Cyberpunk</option>
+        <option value="retro">Retro</option>
+      </select>
+
+      <label for="particleSelect">Parçacık Efekti:</label>
+      <select id="particleSelect" onchange="changeParticles()">
+        <option value="none">Yok</option>
+        <option value="circle">Daire</option>
+        <option value="line">Çizgi</option>
+        <option value="star">Yıldız</option>
+        <option value="snow">Kar</option>
+        <option value="flame">Alev</option>
+        <option value="fireworks">Havai Fişek</option>
+      </select>
+
+      <label for="particleType">Partikül Türü:</label>
+      <select id="particleType" onchange="changeParticleType()">
+        <option value="circle">Daire</option>
+        <option value="line">Çizgi</option>
+        <option value="star">Yıldız</option>
+        <option value="snow">Kar</option>
+        <option value="flame">Alev</option>
+        <option value="fireworks">Havai Fişek</option>
+      </select>
+
+      <label for="particleColor">Partikül Rengi:</label>
+      <input type="color" id="particleColor" onchange="changeParticleType()">
+
+      <label for="particleDensity">Partikül Yoğunluğu:</label>
+      <input type="number" id="particleDensity" min="10" max="200" value="80" onchange="changeParticleType()">
+
+      <label for="fontSelect">Yazı Tipi:</label>
+      <select id="fontSelect" onchange="changeFont()">
+        <option value="Arial, sans-serif">Arial</option>
+        <option value="'Times New Roman', serif">Times New Roman</option>
+        <option value="'Courier New', monospace">Courier New</option>
+        <option value="'Roboto', sans-serif">Roboto</option>
+      </select>
+
+      <label for="clockFormatSelect">Saat Formatı:</label>
+      <select id="clockFormatSelect" onchange="changeClockFormat()">
+        <option value="24">24 Saat</option>
+        <option value="12">12 Saat</option>
+      </select>
+
+      <label for="customGreeting">Özel Selamlama:</label>
+      <input type="text" id="customGreeting" placeholder="Özel selamlamanızı girin" oninput="updateCustomGreeting()">
+
+      <label for="weatherUnitSelect">Hava Durumu Birimi:</label>
+      <select id="weatherUnitSelect" onchange="changeWeatherUnit()">
+        <option value="C">°C</option>
+        <option value="F">°F</option>
+      </select>
+
+      <label for="blurAmount">Arka Plan Bulanıklığı:</label>
+      <input type="range" id="blurAmount" min="0" max="10" value="0" onchange="changeBlur()">
+
+      <label for="scaleAmount">Arayüz Ölçeği:</label>
+      <input type="range" id="scaleAmount" min="0.5" max="1.5" step="0.1" value="1" onchange="changeScale()">
+
+      <label for="customBackground">Özel Arka Plan URL:</label>
+      <input type="url" id="customBackground" placeholder="https://example.com/image.jpg">
+      <button type="button" onclick="applyCustomBackground()">Uygula</button>
+
+      <label for="lowPerformance">Düşük Performans Modu:</label>
+      <input type="checkbox" id="lowPerformance" onchange="toggleLowPerformance()">
+
+      <label for="taglineSpeed">Tagline Hızı (ms):</label>
+      <input type="number" id="taglineSpeed" min="1000" value="5000" oninput="startTaglineRotation()">
+
+      <button type="button" onclick="saveSettings()">Ayarları Kaydet</button>
+    </form>
+  </div>
+
+  <!-- Tema Seçici -->
+  <div id="themeSelector" class="theme-selector">
+    <div class="theme-selector-header">
+      <h3>Tema Seçin</h3>
+      <button class="close-button" onclick="toggleThemeSelector()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="theme-options">
+      <div class="theme-option" data-theme="default">
+        <div class="theme-preview default-theme"></div>
+        <span>Varsayılan</span>
+      </div>
+      <div class="theme-option" data-theme="dark">
+        <div class="theme-preview dark-theme"></div>
+        <span>Karanlık</span>
+      </div>
+      <div class="theme-option" data-theme="light">
+        <div class="theme-preview light-theme"></div>
+        <span>Aydınlık</span>
+      </div>
+      <div class="theme-option" data-theme="cyberpunk">
+        <div class="theme-preview cyberpunk-theme"></div>
+        <span>Cyberpunk</span>
+      </div>
+      <div class="theme-option" data-theme="nature">
+        <div class="theme-preview nature-theme"></div>
+        <span>Doğa</span>
+      </div>
+      <div class="theme-option" data-theme="space">
+        <div class="theme-preview space-theme"></div>
+        <span>Uzay</span>
+      </div>
+      <div class="theme-option" data-theme="turk">
+        <div class="theme-preview turk-theme"></div>
+        <span>Türk</span>
+      </div>
+      <div class="theme-option" data-theme="ottoman">
+        <div class="theme-preview ottoman-theme"></div>
+        <span>Osmanlı</span>
+      </div>
+      <div class="theme-option" data-theme="turan">
+        <div class="theme-preview turan-theme"></div>
+        <span>Turan</span>
+      </div>
+      <div class="theme-option" data-theme="minimalist">
+        <div class="theme-preview minimalist-theme"></div>
+        <span>Minimalist</span>
+      </div>
+      <div class="theme-option" data-theme="retro">
+        <div class="theme-preview retro-theme"></div>
+        <span>Retro</span>
+      </div>
+      <div class="theme-option" data-theme="neon">
+        <div class="theme-preview neon-theme"></div>
+        <span>Neon</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
