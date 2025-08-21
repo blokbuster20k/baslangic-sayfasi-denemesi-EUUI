@@ -30,12 +30,11 @@ Sadece **`Gem3.html` veya `index.html`** dosyasını tarayıcınızda açın. �
 
 ## 🖼️ Ekran Görüntüleri  
 
-### Ana Sayfa
-<img width="1360" alt="EUUI" src="https://github.com/user-attachments/assets/b26cc49f-c67b-409c-9f9b-d0425fb3a1ee" />
 
 ### Index Sayfası
 <img width="1345" alt="index html" src="https://github.com/user-attachments/assets/740754e2-859f-4985-aa0c-a65d1c466e8c" />
-
+### Ana Sayfa
+<img width="1360" alt="EUUI" src="https://github.com/user-attachments/assets/b26cc49f-c67b-409c-9f9b-d0425fb3a1ee" />
 ---
 
 ## 🏷️ Sürüm Bilgisi  
