@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Bozkurt | Cyberpunk Başlangıç</title>
+
+  <!-- Google Font (Orbitron) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Cyberpunk palet */
+      --bg-0: #07070b;
+      --bg-1: #0c0c14;
+      --bg-2: #131326;
+      --text: #e6f7ff;
+      --muted: #9bb0bd;
+      --cyan: #00ffe0;
+      --magenta: #ff2bd6;
+      --yellow: #f8ff53;
+      --glass: rgba(255,255,255,0.06);
+      --glass-brd: rgba(255,255,255,0.18);
+      --shadow: rgba(0,0,0,0.45);
+      --radius: 16px;
+      --transition: 220ms cubic-bezier(.2,.6,.2,1);
+    }
+	
+    [data-theme="light"] {
+      --bg-0: #f6f7fb;
+      --bg-1: #f0f2fa;
+      --bg-2: #e9ecf7;
+      --text: #0b1020;
+      --muted: #4a5568;
+      --glass: rgba(0,0,0,0.04);
+      --glass-brd: rgba(0,0,0,0.12);
+      --shadow: rgba(0,0,0,0.18);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: radial-gradient(1200px 700px at 10% 0%, #1a1147 0%, transparent 55%),
+                  radial-gradient(900px 600px at 90% 20%, #003b4a 0%, transparent 50%),
+                  linear-gradient(160deg, var(--bg-0), var(--bg-2));
+      overflow-x: hidden;
+    }
+
+    /* Hafif yıldız/grain dokusu */
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      background-image:
+        radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,0.25) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 70% 60%, rgba(255,255,255,0.2) 50%, transparent 51%),
+        radial-gradient(1.2px 1.2px at 40% 80%, rgba(255,255,255,0.2) 50%, transparent 51%);
+      opacity: .15;
+      pointer-events: none;
+      animation: twinkle 8s linear infinite alternate;
+      z-index: 0;
+    }
+    @keyframes twinkle { to { opacity: .25; } }
+
+    .container {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 28px 20px 60px;
+      z-index: 1;
+    }
+
+    .glass {
+      background: var(--glass);
+      border: 1px solid var(--glass-brd);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    /* Header */
+    .header {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 18px;
+      padding: 14px 16px;
+    }
+
+    .logo {
+      display: flex; align-items: center; gap: 12px;
+      font-family: Orbitron, monospace;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .logo .brand {
+      background: linear-gradient(135deg, var(--cyan), var(--magenta));
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 18px;
+    }
+    .subtitle {
+      font-size: 12px; color: var(--muted);
+      letter-spacing: .2em;
+    }
+
+    /* Bozkurt SVG + neon */
+    .bozkurt {
+      width: 44px; height: 44px; flex: 0 0 44px;
+      filter: drop-shadow(0 0 6px rgba(0,255,224,0.6)) drop-shadow(0 0 16px rgba(255,43,214,0.35));
+    }
+    .bozkurt path {
+      fill: none; stroke: var(--cyan); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    .header-right {
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    .chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--glass-brd);
+      background: linear-gradient( to bottom, rgba(255,255,255,.06), rgba(255,255,255,.02) );
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .icon-btn {
+      width: 40px; height: 40px;
+      display: grid; place-items: center;
+      border-radius: 10px;
+      border: 1px solid var(--glass-brd);
+      background: linear-gradient( to bottom, rgba(255,255,255,.08), rgba(255,255,255,.03) );
+      color: var(--text);
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+    .icon-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px var(--shadow);
+      border-color: transparent;
+    }
+
+    /* Clock */
+    .clock-wrap {
+      display: grid; gap: 2px;
+      justify-items: center;
+    }
+    .time {
+      font-family: Orbitron, monospace;
+      font-weight: 800;
+      font-size: clamp(26px, 4.5vw, 40px);
+      letter-spacing: .06em;
+      background: linear-gradient(135deg, var(--cyan), var(--magenta));
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(0,255,224,0.25);
+    }
+    .date {
+      font-size: 12px; color: var(--muted);
+      letter-spacing: .12em; text-transform: capitalize;
+    }
+
+    /* Search */
+    .search {
+      display: grid; grid-template-columns: 160px 1fr auto;
+      gap: 10px; padding: 14px; margin-top: 16px;
+      align-items: center;
+    }
+    .select, .input, .btn {
+      height: 44px; border-radius: 12px; border: 1px solid var(--glass-brd);
+      background: rgba(0,0,0,.18);
+      color: var(--text); padding: 0 12px; font-size: 14px;
+      outline: none; transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition), background var(--transition);
+      backdrop-filter: blur(8px);
+    }
+    [data-theme="light"] .select, [data-theme="light"] .input {
+      background: rgba(255,255,255,.5);
+    }
+    .input::placeholder { color: #aab7c2; }
+    .select:focus, .input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,255,224,0.15); background: rgba(0,0,0,.24); }
+
+    .btn {
+      display: inline-grid; place-items: center; padding: 0 18px;
+      background: linear-gradient(135deg, var(--cyan), var(--magenta));
+      border: none; color: #051015; font-weight: 700; letter-spacing: .05em; cursor: pointer;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(0,255,224,.2), 0 8px 20px rgba(255,43,214,.15); }
+
+    /* Sections */
+    .section {
+      margin-top: 18px; padding: 16px;
+    }
+    .section-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: Orbitron, monospace; font-size: 14px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted);
+    }
+
+    /* Shortcuts */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      position: relative;
+      padding: 14px 12px;
+      border: 1px solid var(--glass-brd);
+      background: linear-gradient( to bottom right, rgba(255,255,255,.08), rgba(255,255,255,.03) );
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      overflow: hidden;
+      min-height: 96px;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px var(--shadow); border-color: transparent; }
+    .card::after {
+      content: ""; position: absolute; inset: -1px;
+      background: conic-gradient(from 180deg at 50% 50%, rgba(0,255,224,.12), transparent, rgba(255,43,214,.12), transparent);
+      filter: blur(14px); opacity: 0; transition: opacity var(--transition); z-index: -1;
+    }
+    .card:hover::after { opacity: 1; }
+
+    .ic {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: grid; place-items: center; font-size: 22px; font-weight: 700;
+      color: #051015;
+      background: linear-gradient(135deg, var(--cyan), var(--magenta));
+      box-shadow: inset 0 0 1px rgba(255,255,255,.4);
+      margin-bottom: 8px;
+    }
+    .title { font-weight: 700; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .url { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .card-actions {
+      position: absolute; top: 8px; right: 8px; display: flex; gap: 6px; opacity: 0; transition: opacity var(--transition);
+    }
+    .card:hover .card-actions { opacity: 1; }
+    .mini {
+      width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--glass-brd);
+      background: rgba(0,0,0,.25); color: var(--text); display: grid; place-items: center; cursor: pointer;
+    }
+    [data-theme="light"] .mini { background: rgba(255,255,255,.6); }
+
+    /* Modal */
+    .modal {
+      position: fixed; inset: 0;
+      display: none; place-items: center;
+      background: rgba(0,0,0,.55);
+      z-index: 50;
+    }
+    .modal.active { display: grid; }
+    .modal-card {
+      width: min(520px, 92vw);
+      padding: 18px;
+      border-radius: 18px;
+      background: var(--glass);
+      border: 1px solid var(--glass-brd);
+      box-shadow: 0 20px 50px var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+    .form { display: grid; gap: 12px; margin-top: 10px; }
+    .row { display: grid; gap: 8px; }
+    .label { font-size: 12px; color: var(--muted); letter-spacing: .08em; }
+    .control { height: 44px; border-radius: 12px; border: 1px solid var(--glass-brd); padding: 0 12px; background: rgba(0,0,0,.2); color: var(--text); }
+    [data-theme="light"] .control { background: rgba(255,255,255,.6); }
+    .actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+    .btn-ghost { height: 42px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--glass-brd); background: transparent; color: var(--text); cursor: pointer; }
+    .btn-primary { height: 42px; padding: 0 16px; border-radius: 12px; border: none; background: linear-gradient(135deg, var(--cyan), var(--magenta)); color: #051015; font-weight: 800; letter-spacing: .05em; cursor: pointer; }
+
+    /* Footer tip */
+    .footer-tip {
+      margin-top: 16px; padding: 12px;
+      font-size: 12px; color: var(--muted);
+      border-radius: 12px; border: 1px solid var(--glass-brd);
+      background: linear-gradient( to bottom, rgba(255,255,255,.06), rgba(255,255,255,.02) );
+      text-align: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 720px) {
+      .header { grid-template-columns: auto 1fr auto; }
+      .search { grid-template-columns: 1fr; }
+      .select { height: 40px; }
+      .input { height: 44px; }
+      .btn { height: 44px; }
+      .card { min-height: 88px; }
+      .subtitle { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header glass">
+      <div class="logo">
+        <svg class="bozkurt" viewBox="0 0 64 64" aria-label="Bozkurt">
+          <!-- Stilize Bozkurt çizgileri -->
+          <path d="M10 42 L18 30 L26 28 L30 20 L36 16 L46 18 L54 26
+                   M26 28 L34 30 L40 36 L46 44
+                   M34 30 L30 38 L22 44
+                   M30 20 L28 16 L30 14 L33 16
+                   M46 18 L50 16 L53 18 L51 22
+                   M22 44 L26 46 L30 44
+                   M46 44 L50 46 L54 44" />
+        </svg>
+        <div>
+          <div class="brand">EUUI 6.2 // BOZKURT  </div>
+          <div class="subtitle">TURK OGUN CALIS GUVEN • ANASAYFA</div>
+        </div>
+      </div>
+
+      <div class="clock-wrap">
+        <div id="time" class="time">00:00:00</div>
+        <div id="date" class="date">Pazar, 1 Ocak 2025</div>
+      </div>
+
+      <div class="header-right">
+        <div id="defaultEngineChip" class="chip">Google</div>
+        <button id="themeBtn" class="icon-btn" title="Tema değiştir (L/D)">🌓</button>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="search glass">
+      <select id="engine" class="select" aria-label="Arama motoru">
+        <option value="google">Google</option>
+        <option value="duckduckgo">DuckDuckGo</option>
+        <option value="yandex">Yandex</option>
+        <option value="bing">Bing</option>
+      </select>
+      <input id="q" class="input" type="text" placeholder="Ara... (Ctrl / ⌘ + K )" autocomplete="off" />
+      <button id="searchBtn" class="btn">Ara</button>
+    </div>
+
+    <!-- Shortcuts -->
+    <div class="section glass">
+      <div class="section-header">
+        <div class="section-title">Kısayollar</div>
+        <div style="display:flex; gap:8px;">
+          <button id="addBtn" class="btn">+ Kısayol</button>
+        </div>
+      </div>
+
+      <div id="grid" class="grid"></div>
+
+      <div class="footer-tip">İpucu: Kısayolların üzerine gelince silme butonu belirir. Enter ile arama yapabilirsin.</div>
+    </div>
+  </div>
+
+  <!-- Add Shortcut Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-card">
+      <div class="section-header" style="margin-bottom: 6px;">
+        <div class="section-title">Yeni Kısayol</div>
+        <button id="closeModal" class="icon-btn" aria-label="Kapat">✕</button>
+      </div>
+
+      <div class="form">
+        <div class="row">
+          <label class="label" for="title">Başlık</label>
+          <input id="title" class="control" type="text" placeholder="Örn: GitHub" />
+        </div>
+        <div class="row">
+          <label class="label" for="url">URL</label>
+          <input id="url" class="control" type="url" placeholder="https://example.com" />
+        </div>
+        <div class="row">
+          <label class="label" for="icon">İkon (Emoji ya da 1-2 karakter)</label>
+          <input id="icon" class="control" type="text" placeholder="💻" maxlength="3" />
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-ghost" id="cancel">Vazgeç</button>
+        <button class="btn-primary" id="save">Ekle</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Basit storage yardımcıları
+    const store = {
+      get(k, d) { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? d; } catch { return d; } },
+      set(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
+    };
+
+    // Arama motorları
+    const ENGINE_URL = {
+      google: q => `https://www.google.com/search?q=${encodeURIComponent(q)}`,
+      duckduckgo: q => `https://duckduckgo.com/?q=${encodeURIComponent(q)}`,
+      yandex: q => `https://yandex.com/search/?text=${encodeURIComponent(q)}`,
+      bing: q => `https://www.bing.com/search?q=${encodeURIComponent(q)}`
+    };
+
+    // State
+    let theme = store.get('theme', 'dark'); // 'dark' | 'light'
+    let defaultEngine = store.get('engine', 'google');
+    let shortcuts = store.get('shortcuts', [
+      { id: crypto.randomUUID(), title: 'Google', url: 'https://www.google.com', icon: 'G' },
+      { id: crypto.randomUUID(), title: 'YouTube', url: 'https://www.youtube.com', icon: '▶️' },
+      { id: crypto.randomUUID(), title: 'GitHub', url: 'https://github.com', icon: '💻' },
+      { id: crypto.randomUUID(), title: 'Figma', url: 'https://figma.com', icon: '🎨' },
+      { id: crypto.randomUUID(), title: 'Notion', url: 'https://notion.so', icon: '📝' }
+    ]);
+
+    // Elements
+    const timeEl = document.getElementById('time');
+    const dateEl = document.getElementById('date');
+    const themeBtn = document.getElementById('themeBtn');
+    const engineSel = document.getElementById('engine');
+    const defaultEngineChip = document.getElementById('defaultEngineChip');
+    const qInput = document.getElementById('q');
+    const searchBtn = document.getElementById('searchBtn');
+    const grid = document.getElementById('grid');
+    const addBtn = document.getElementById('addBtn');
+    const modal = document.getElementById('modal');
+    const closeModalBtn = document.getElementById('closeModal');
+    const cancelBtn = document.getElementById('cancel');
+    const saveBtn = document.getElementById('save');
+    const titleIn = document.getElementById('title');
+    const urlIn = document.getElementById('url');
+    const iconIn = document.getElementById('icon');
+
+    // Init Theme
+    document.documentElement.setAttribute('data-theme', theme);
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+
+    // Init Engine
+    engineSel.value = defaultEngine;
+    defaultEngineChip.textContent = engineSel.options[engineSel.selectedIndex].textContent;
+
+    // Saat / Tarih
+    function updateClock() {
+      const now = new Date();
+      timeEl.textContent = now.toLocaleTimeString('tr-TR', { hour12: false });
+      dateEl.textContent = now.toLocaleDateString('tr-TR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // Tema
+    function toggleTheme() {
+      theme = theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+      themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+      store.set('theme', theme);
+    }
+    themeBtn.addEventListener('click', toggleTheme);
+
+    // Arama
+    function doSearch() {
+      const engine = engineSel.value;
+      const q = qInput.value.trim();
+      if (!q) { qInput.focus(); return; }
+      const url = ENGINE_URL[engine](q);
+      window.open(url, '_blank');
+      // Varsayılan motoru hatırla
+      defaultEngine = engine;
+      store.set('engine', defaultEngine);
+      defaultEngineChip.textContent = engineSel.options[engineSel.selectedIndex].textContent;
+    }
+    searchBtn.addEventListener('click', doSearch);
+    qInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') doSearch();
+    });
+    // Ctrl/⌘ + K odak kısayolu
+    window.addEventListener('keydown', (e) => {
+      const isMac = navigator.platform.toUpperCase().includes('MAC');
+      if ((isMac ? e.metaKey : e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        qInput.focus();
+        qInput.select();
+      }
+    });
+
+    // Shortcuts render
+    function renderShortcuts() {
+      grid.innerHTML = '';
+      shortcuts.forEach(s => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.title = s.url;
+        card.addEventListener('click', (ev) => {
+          // Mini butonlara tıklamayı card açmasın
+          if ((ev.target).closest?.('.card-actions')) return;
+          window.open(s.url, '_blank');
+        });
+
+        const icon = document.createElement('div');
+        icon.className = 'ic';
+        icon.textContent = s.icon || s.title?.[0]?.toUpperCase() || '★';
+
+        const title = document.createElement('div');
+        title.className = 'title';
+        title.textContent = s.title;
+
+        const url = document.createElement('div');
+        url.className = 'url';
+        url.textContent = s.url.replace(/^https?:\/\//, '');
+
+        const actions = document.createElement('div');
+        actions.className = 'card-actions';
+
+        const del = document.createElement('button');
+        del.className = 'mini';
+        del.title = 'Sil';
+        del.textContent = '🗑️';
+        del.addEventListener('click', (e) => {
+          e.stopPropagation();
+          removeShortcut(s.id);
+        });
+
+        actions.appendChild(del);
+        card.appendChild(actions);
+        card.appendChild(icon);
+        card.appendChild(title);
+        card.appendChild(url);
+        grid.appendChild(card);
+      });
+    }
+
+    function removeShortcut(id) {
+      shortcuts = shortcuts.filter(x => x.id !== id);
+      store.set('shortcuts', shortcuts);
+      renderShortcuts();
+    }
+
+    function sanitizeUrl(raw) {
+      let u = raw.trim();
+      if (!u) return '';
+      if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
+      try { new URL(u); return u; } catch { return ''; }
+    }
+
+    // Modal controls
+    function openModal() {
+      modal.classList.add('active');
+      titleIn.value = '';
+      urlIn.value = '';
+      iconIn.value = '';
+      setTimeout(() => titleIn.focus(), 0);
+    }
+    function closeModal() { modal.classList.remove('active'); }
+
+    addBtn.addEventListener('click', openModal);
+    closeModalBtn.addEventListener('click', closeModal);
+    cancelBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    function saveShortcut() {
+      const title = titleIn.value.trim();
+      const url = sanitizeUrl(urlIn.value);
+      const icon = iconIn.value.trim().slice(0, 3);
+
+      if (!title || !url) {
+        alert('Başlık ve geçerli URL gerekli.');
+        return;
+      }
+
+      // Basit tekrar kontrolü (URL bazlı)
+      if (shortcuts.some(s => s.url.toLowerCase() === url.toLowerCase())) {
+        alert('Bu URL zaten kısayollarında mevcut.');
+        return;
+      }
+
+      shortcuts.unshift({ id: crypto.randomUUID(), title, url, icon: icon || title[0].toUpperCase() });
+      store.set('shortcuts', shortcuts);
+      renderShortcuts();
+      closeModal();
+    }
+    saveBtn.addEventListener('click', saveShortcut);
+    [titleIn, urlIn, iconIn].forEach(el => el.addEventListener('keydown', e => { if (e.key === 'Enter') saveShortcut(); }));
+
+    // İlk render
+    renderShortcuts();
+  </script>
+</body>
+</html>

@@ -1,0 +1,648 @@
+
+<!DOCTYPE html>
+<html lang="tr" data-theme="gokboru-dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>EUUI 6.3 | Bozkurt</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ------------------- */
+        /* --- TEMALAR & DEĞİŞKENLER --- */
+        /* ------------------- */
+        :root {
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --gap-sm: 8px;
+            --gap-md: 16px;
+            --gap-lg: 24px;
+            --transition: 250ms cubic-bezier(.2, .6, .2, 1);
+            --font-main: 'Inter', system-ui, sans-serif;
+            --font-display: 'Orbitron', monospace;
+        }
+        
+        /* 1. YENİ: Gökbörü Dark (Varsayılan) */
+        [data-theme="gokboru-dark"] { --bg-0:#0a0f18; --bg-1:#101623; --bg-2:#161e31; --bg-3:rgba(22,30,49,0.7); --text:#e0e5f0; --muted:#7b88a1; --cyan:#00aaff; --magenta:#8a3ffc; --yellow:#ffee58; --glass-brd:rgba(123,136,161,0.2); --shadow:rgba(0,10,25,0.4); --bg-gradient: radial-gradient(1000px 600px at 5% 0%, #1a1147 0%, transparent 60%), radial-gradient(800px 500px at 95% 10%, #003b4a 0%, transparent 55%), linear-gradient(170deg, var(--bg-0), var(--bg-1)); }
+        [data-theme="gokboru-light"] { --bg-0:#f7f9fc; --bg-1:#f0f3f9; --bg-2:#e8ecf4; --bg-3:rgba(232,236,244,0.7); --text:#101623; --muted:#5a6782; --cyan:#0077cc; --magenta:#6e23d9; --yellow:#fbc02d; --glass-brd:rgba(90,103,130,0.2); --shadow:rgba(90,103,130,0.15); --bg-gradient: linear-gradient(170deg, var(--bg-0), var(--bg-1)); }
+        [data-theme="cyberpunk-dark"] { --bg-0:#07070b; --bg-1:#0c0c14; --bg-2:#131326; --bg-3:rgba(19,19,38,0.7); --text:#e6f7ff; --muted:#9bb0bd; --cyan:#00ffe0; --magenta:#ff2bd6; --yellow:#f8ff53; --glass-brd:rgba(255,255,255,0.18); --shadow:rgba(0,0,0,0.45); --bg-gradient: radial-gradient(1200px 700px at 10% 0%, #1a1147 0%, transparent 55%), radial-gradient(900px 600px at 90% 20%, #003b4a 0%, transparent 50%), linear-gradient(160deg, var(--bg-0), var(--bg-2)); }
+        [data-theme="dracula"] { --bg-0:#282a36; --bg-1:#20222c; --bg-2:#1a1b23; --bg-3:rgba(40,42,54,0.7); --text:#f8f8f2; --muted:#bd93f9; --cyan:#8be9fd; --magenta:#ff79c6; --yellow:#f1fa8c; --glass-brd:rgba(189,147,249,0.3); --shadow:rgba(0,0,0,0.3); --bg-gradient: linear-gradient(160deg, var(--bg-0), var(--bg-2)); }
+        [data-theme="nord"] { --bg-0:#2E3440; --bg-1:#3B4252; --bg-2:#434C5E; --bg-3:rgba(59,66,82,0.7); --text:#ECEFF4; --muted:#88C0D0; --cyan:#8FBCBB; --magenta:#B48EAD; --yellow:#EBCB8B; --glass-brd:rgba(216,222,233,0.15); --shadow:rgba(0,0,0,0.3); --bg-gradient: linear-gradient(160deg, var(--bg-0), var(--bg-1)); }
+        [data-theme="matrix"] { --bg-0:#000000; --bg-1:#050505; --bg-2:#0a0a0a; --bg-3:rgba(0,0,0,0.7); --text:#00ff41; --muted:#008F11; --cyan:#00ff41; --magenta:#35ff6d; --yellow:#9bffb8; --glass-brd:rgba(0, 255, 65, 0.2); --shadow:rgba(0,0,0,0.6); --bg-gradient: linear-gradient(160deg, var(--bg-0), var(--bg-1)); }
+        [data-theme="turanci"] { --bg-0:#3a2c2c; --bg-1:#2c2121; --bg-2:#1e1616; --bg-3:rgba(58,44,44,0.7); --text:#f5e1da; --muted:#c86e57; --cyan:#57a8c8; --magenta:#c8576c; --yellow:#e7a553; --glass-brd:rgba(200,87,108,0.22); --shadow:rgba(0,0,0,0.5); --bg-gradient: radial-gradient(circle at top right, #5c4343, transparent 60%), linear-gradient(160deg, var(--bg-0), var(--bg-1)); }
+        
+        [data-theme="custom"] {
+            --bg-0: var(--custom-bg-0, #1f1f32); --bg-1: var(--custom-bg-1, #1a1a2b); --bg-2: var(--custom-bg-2, #151524); --bg-3: var(--custom-bg-3, rgba(21,21,36,0.7));
+            --text: var(--custom-text, #efefff); --muted: var(--custom-muted, #a0a0cc); --cyan: var(--custom-cyan, #00ffe0);
+            --magenta: var(--custom-magenta, #ff2bd6); --yellow: var(--custom-yellow, #f8ff53);
+            --glass-brd:rgba(255,255,255,0.18); --shadow:rgba(0,0,0,0.45); --bg-gradient: linear-gradient(160deg, var(--bg-0), var(--bg-1));
+        }
+        
+        /* ------------------- */
+        /* --- TEMEL & DÜZEN --- */
+        /* ------------------- */
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { height: 100%; }
+        body { margin: 0; font-family: var(--font-main); color: var(--text); background: var(--bg-1); overflow: hidden; transition: background var(--transition), color var(--transition); }
+        body::before, body::after { content: ""; position: fixed; inset: 0; z-index: -1; transition: background-image var(--transition); }
+        body::before { background-image: var(--bg-gradient); }
+        body::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+
+        .app-container { display: flex; height: 100vh; }
+        .sidebar { flex: 0 0 64px; background: var(--bg-0); display: flex; flex-direction: column; align-items: center; padding: var(--gap-md) 0; gap: var(--gap-md); border-right: 1px solid var(--glass-brd); transition: background var(--transition); z-index: 10; }
+        .main-content { flex-grow: 1; overflow-y: auto; padding: var(--gap-lg); }
+        .main-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--gap-md); animation: fadeIn 600ms var(--transition) both; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .widget {
+            background: var(--bg-3); border: 1px solid var(--glass-brd); border-radius: var(--radius-lg); backdrop-filter: blur(12px);
+            padding: var(--gap-md); box-shadow: 0 8px 32px var(--shadow); transition: all var(--transition); animation: slideUp 500ms var(--transition) both;
+        }
+        .widget.hidden { display: none; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .main-grid > .widget:nth-child(1) { animation-delay: 100ms; }
+        .main-grid > .widget:nth-child(2) { animation-delay: 200ms; }
+        .main-grid > .widget:nth-child(3) { animation-delay: 300ms; }
+        .main-grid > .widget:nth-child(4) { animation-delay: 400ms; }
+        
+        /* ------------------- */
+        /* --- BİLEŞENLER --- */
+        /* ------------------- */
+        .brand-logo { filter: drop-shadow(0 0 4px var(--cyan)) drop-shadow(0 0 12px var(--magenta)); margin-bottom: var(--gap-lg); }
+        .brand-logo path { fill: none; stroke: var(--cyan); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+        
+        .nav-btn { width: 44px; height: 44px; border-radius: var(--radius-md); border: none; background: transparent; color: var(--muted); cursor: pointer; display: grid; place-items: center; transition: all var(--transition); }
+        .nav-btn.active, .nav-btn:hover { background: linear-gradient(135deg, color-mix(in srgb, var(--cyan) 20%, transparent), color-mix(in srgb, var(--magenta) 20%, transparent)); color: var(--text); border: 1px solid var(--glass-brd); }
+        .nav-btn svg { width: 22px; height: 22px; stroke-width: 2; }
+        
+        .greeting-widget { grid-column: 1 / -1; padding: var(--gap-lg); display: flex; justify-content: space-between; align-items: center; }
+        .greeting-text h1 { margin: 0; font-size: 2em; font-weight: 600; }
+        .greeting-text p { margin: 4px 0 0; color: var(--muted); }
+        .clock { text-align: right; }
+        .time { font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 800; background: linear-gradient(135deg, var(--cyan), var(--magenta)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 20px color-mix(in srgb, var(--cyan) 15%, transparent); letter-spacing: .05em; }
+        .date { font-size: 0.9em; color: var(--muted); letter-spacing: .1em; text-transform: capitalize; }
+        
+        .search-widget { grid-column: 1 / -1; }
+        .search-bar { display: flex; gap: var(--gap-sm); }
+        .search-icon { flex-shrink: 0; display: grid; place-items: center; padding: 0 12px; border-radius: var(--radius-md) 0 0 var(--radius-md); background: var(--bg-2); border: 1px solid var(--glass-brd); border-right: none; color: var(--muted); }
+        .input { flex-grow: 1; height: 50px; border: 1px solid var(--glass-brd); background: var(--bg-1); color: var(--text); padding: 0 16px; font-size: 1rem; outline: none; transition: all var(--transition); border-left: none; border-right: none; }
+        .input::placeholder { color: var(--muted); }
+        .input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px color-mix(in srgb, var(--cyan) 20%, transparent); z-index: 1; }
+        .btn { height: 50px; border-radius: var(--radius-md); border: none; background: linear-gradient(135deg, var(--cyan), var(--magenta)); color: var(--bg-0); font-weight: 700; letter-spacing: .05em; cursor: pointer; padding: 0 24px; transition: all var(--transition); }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px color-mix(in srgb, var(--cyan) 20%, transparent), 0 8px 20px color-mix(in srgb, var(--magenta) 15%, transparent); }
+        .search-bar .btn { border-radius: 0 var(--radius-md) var(--radius-md) 0; }
+        
+        .widget-header { display: flex; align-items: center; gap: var(--gap-sm); margin-bottom: var(--gap-md); }
+        .widget-header svg { color: var(--muted); }
+        .widget-title { font-size: 1rem; font-weight: 600; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin: 0; }
+        
+        .shortcuts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: var(--gap-md); }
+        .shortcut-card { position: relative; padding: var(--gap-md) 12px; background: linear-gradient(160deg, color-mix(in srgb, var(--text) 4%, transparent), color-mix(in srgb, var(--text) 1%, transparent)); border-radius: var(--radius-md); cursor: pointer; transition: all var(--transition); border: 1px solid transparent; min-height: 100px; text-align: center; }
+        .shortcut-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px var(--shadow); background: linear-gradient(160deg, color-mix(in srgb, var(--text) 8%, transparent), color-mix(in srgb, var(--text) 3%, transparent)); border-color: var(--glass-brd); }
+        .shortcut-card .icon { width: 48px; height: 48px; border-radius: var(--radius-md); display: grid; place-items: center; font-size: 24px; font-weight: 700; color: var(--bg-0); background: linear-gradient(135deg, var(--cyan), var(--magenta)); box-shadow: inset 0 0 1px rgba(255,255,255,.4); margin: 0 auto 10px; }
+        .shortcut-card .title { font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .shortcut-card .url { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .card-actions { position: absolute; top: var(--gap-sm); right: var(--gap-sm); display: flex; gap: 6px; opacity: 0; transition: opacity var(--transition); }
+        .shortcut-card:hover .card-actions { opacity: 1; }
+        .mini-btn { width: 28px; height: 28px; border-radius: var(--radius-sm); border: 1px solid var(--glass-brd); background: var(--bg-3); backdrop-filter: blur(8px); color: var(--muted); display: grid; place-items: center; cursor: pointer; transition: all var(--transition); }
+        .mini-btn:hover { background: var(--magenta); color: var(--bg-0); }
+        
+        .notes-container { display: flex; flex-direction: column; gap: 10px; max-height: 200px; overflow-y: auto; padding-right: 5px; margin-bottom: var(--gap-md); }
+        .note { padding: 10px 12px; background: var(--bg-1); border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
+        .note-text { flex-grow: 1; }
+        .note-delete-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 16px; padding: 4px; border-radius: 5px; }
+        .note-delete-btn:hover { color: var(--magenta); background: color-mix(in srgb, var(--text) 10%, transparent); }
+        #new-note-input { width: 100%; height: 44px; }
+        
+        #pomodoro-widget .pomodoro-display { text-align: center; margin-bottom: var(--gap-md); }
+        #pomodoro-timer { font-family: var(--font-display); font-size: 3rem; color: var(--yellow); letter-spacing: .08em; }
+        #pomodoro-session { color: var(--muted); font-size: 0.9em; }
+        #pomodoro-controls { display: flex; justify-content: center; gap: var(--gap-sm); }
+        .btn-ghost { height: 42px; padding: 0 14px; border-radius: var(--radius-md); border: 1px solid var(--glass-brd); background: transparent; color: var(--text); cursor: pointer; font-weight: 500; transition: all var(--transition); }
+        .btn-ghost:hover { background: color-mix(in srgb, var(--text) 10%, transparent); border-color: var(--cyan); }
+        
+        #quote-widget .quote-text { font-size: 14px; font-style: italic; color: var(--muted); }
+        #quote-widget .quote-author { text-align: right; font-weight: bold; margin-top: 8px; color: var(--cyan); font-size: 13px; }
+        #new-quote-btn { float: right; }
+        
+        #weather-widget .weather-content { text-align: center; }
+        #weather-widget .weather-temp { font-size: 2.2em; font-weight: bold; color: var(--yellow); }
+        #weather-widget .weather-desc { text-transform: capitalize; color: var(--muted); font-size: 1em; }
+        
+        #calculator-widget .calc-display { width: 100%; height: 50px; background: var(--bg-1); border-radius: var(--radius-sm); margin-bottom: var(--gap-md); padding: 0 var(--gap-md); text-align: right; font-family: var(--font-display); font-size: 2em; color: var(--text); border: 1px solid var(--glass-brd); }
+        #calculator-widget .calc-keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap-sm); }
+        #calculator-widget .calc-keys button { height: 44px; border-radius: var(--radius-sm); border: 1px solid var(--glass-brd); background: color-mix(in srgb, var(--text) 5%, transparent); font-size: 1.1em; font-weight: 600; color: var(--text); cursor: pointer; transition: all var(--transition); }
+        #calculator-widget .calc-keys button:hover { background: color-mix(in srgb, var(--text) 10%, transparent); }
+        #calculator-widget .calc-keys button.operator { background: color-mix(in srgb, var(--cyan) 15%, transparent); color: var(--cyan); }
+        #calculator-widget .calc-keys button.equal { background: var(--cyan); color: var(--bg-0); grid-column: 3 / 5; }
+        
+        /* ------------------- */
+        /* --- MODAL PENCERELER --- */
+        /* ------------------- */
+        .modal { position: fixed; inset: 0; display: grid; place-items: center; background: rgba(0,0,0,.6); z-index: 50; opacity: 0; pointer-events: none; transition: opacity var(--transition); }
+        .modal.active { opacity: 1; pointer-events: auto; }
+        .modal-card { width: min(800px, 94vw); max-height: 85vh; padding: 0; border-radius: var(--radius-lg); background: var(--bg-1); border: 1px solid var(--glass-brd); box-shadow: 0 20px 50px var(--shadow); overflow: hidden; display: flex; flex-direction: column; transform: scale(0.95); transition: transform var(--transition); }
+        .modal.active .modal-card { transform: scale(1); }
+        .modal-header { padding: var(--gap-md) var(--gap-lg); border-bottom: 1px solid var(--glass-brd); display: flex; justify-content: space-between; align-items: center; }
+        .modal-title { font-family: var(--font-display); font-size: 1.1em; letter-spacing: .1em; margin: 0; text-transform: uppercase; }
+        .close-modal-btn { width: 36px; height: 36px; border-radius: 50%; border: none; background: transparent; color: var(--muted); font-size: 20px; cursor: pointer; display: grid; place-items: center; }
+        .close-modal-btn:hover { background: color-mix(in srgb, var(--text) 10%, transparent); color: var(--text); }
+        .modal-body { padding: var(--gap-lg); overflow-y: auto; }
+        .form { display: grid; gap: var(--gap-md); margin-top: var(--gap-sm); }
+        .form-group { display: grid; gap: var(--gap-sm); }
+        .label { font-size: 13px; font-weight: 500; color: var(--muted); letter-spacing: .08em; }
+        .control { width: 100%; height: 44px; border-radius: var(--radius-md); border: 1px solid var(--glass-brd); background: var(--bg-0); color: var(--text); padding: 0 12px; font-size: 14px; outline: none; transition: all var(--transition); }
+        .control:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px color-mix(in srgb, var(--cyan) 20%, transparent); }
+        .actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: var(--gap-sm); }
+        .btn-primary { height: 42px; padding: 0 16px; border-radius: var(--radius-md); border: none; background: linear-gradient(135deg, var(--cyan), var(--magenta)); color: var(--bg-0); font-weight: 800; letter-spacing: .05em; cursor: pointer; }
+        
+        .tabs { display: flex; border-bottom: 1px solid var(--glass-brd); padding: 0 var(--gap-lg); }
+        .tab-btn { padding: 14px 18px; border: none; background: none; color: var(--muted); cursor: pointer; font-size: 14px; font-weight: 600; position: relative; }
+        .tab-btn::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: var(--cyan); transform: scaleX(0); transition: transform var(--transition); }
+        .tab-btn.active { color: var(--text); }
+        .tab-btn.active::after { transform: scaleX(1); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 300ms; }
+        
+        .theme-selector { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--gap-md); }
+        .theme-option { cursor: pointer; padding: 12px; border-radius: var(--radius-md); border: 2px solid var(--glass-brd); transition: all var(--transition); }
+        .theme-option.active { border-color: var(--cyan); box-shadow: 0 0 10px color-mix(in srgb, var(--cyan) 30%, transparent); }
+        .theme-preview { display: flex; gap: 5px; margin-top: 8px; }
+        .theme-preview span { width: 22px; height: 22px; border-radius: 5px; }
+        
+        .customization-grid, .widget-toggle-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--gap-md); margin-top:var(--gap-sm); }
+        .color-picker-wrapper { display: flex; flex-direction: column; gap: var(--gap-sm); }
+        input[type="color"] { width: 100%; height: 40px; border: none; padding: 0; background: none; cursor: pointer; border-radius: var(--radius-sm); overflow:hidden; border: 1px solid var(--glass-brd); }
+        .checkbox-wrapper { display: flex; align-items: center; gap: 10px; padding: 12px; background: var(--bg-0); border-radius: var(--radius-md); }
+        .hr { height: 1px; background-color: var(--glass-brd); border: none; margin: var(--gap-lg) 0; }
+        
+        /* ------------------- */
+        /* --- UYARLANABİLİRLİK --- */
+        /* ------------------- */
+        @media (max-width: 1200px) { .greeting-widget { flex-direction: column; align-items: flex-start; gap: var(--gap-md); } .clock { text-align: left; } }
+        @media (max-width: 768px) {
+            .app-container { flex-direction: column-reverse; }
+            .sidebar { flex-direction: row; flex-shrink: 0; width: 100%; height: 60px; justify-content: space-around; padding: 0; border-right: none; border-top: 1px solid var(--glass-brd); }
+            .brand-logo { display: none; }
+            .main-content { padding: var(--gap-md); }
+            .greeting-text h1 { font-size: 1.5em; }
+            .time { font-size: 2rem; }
+            .search-bar { flex-direction: column; }
+            .search-icon { border-radius: var(--radius-md) var(--radius-md) 0 0; border-right: 1px solid var(--glass-brd); }
+            .input { border-radius: 0; }
+            .search-bar .btn { border-radius: 0 0 var(--radius-md) var(--radius-md); }
+        }
+        
+    </style>
+</head>
+
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+        <svg class="brand-logo" width="44" height="44" viewBox="0 0 64 64" aria-label="Bozkurt Logosu">
+          <path d="M10 42 L18 30 L26 28 L30 20 L36 16 L46 18 L54 26 M26 28 L34 30 L40 36 L46 44 M34 30 L30 38 L22 44 M30 20 L28 16 L30 14 L33 16 M46 18 L50 16 L53 18 L51 22 M22 44 L26 46 L30 44 M46 44 L50 46 L54 44" />
+        </svg>
+        <button id="nav-shortcuts" class="nav-btn active" title="Kısayollar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        </button>
+        <button id="nav-tools" class="nav-btn" title="Araç Kutusu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+        </button>
+        <button id="nav-settings" class="nav-btn" title="Ayarlar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+    </aside>
+
+    <main class="main-content">
+        <div class="main-grid">
+            <header class="widget greeting-widget">
+                <div class="greeting-text">
+                    <h1 id="greeting">...</h1>
+                    <p>Türk, Öğün, Çalış, Güven!</p>
+                </div>
+                <div class="clock">
+                    <div id="time" class="time"></div>
+                    <div id="date" class="date"></div>
+                </div>
+            </header>
+
+            <section class="widget search-widget">
+                 <div class="search-bar">
+                    <span class="search-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+                    <input id="q" class="input" type="text" placeholder="Ara veya komut gir (!yt, !gh)... (Ctrl/⌘ + K)" autocomplete="off" />
+                    <button id="searchBtn" class="btn">ARA</button>
+                </div>
+            </section>
+            
+            <section id="shortcuts-widget-container" class="widget">
+                <div class="widget-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    <h2 class="widget-title">Kısayollar</h2>
+                    <button id="addShortcutBtn" class="btn" style="margin-left: auto; height: 36px; padding: 0 16px;">+ Ekle</button>
+                </div>
+                <div id="shortcuts-grid" class="shortcuts-grid"></div>
+            </section>
+
+            <section id="notes-widget-container" class="widget">
+                <div class="widget-header">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                    <h2 class="widget-title">Hızlı Notlar</h2>
+                </div>
+                <div id="notes-container" class="notes-container"></div>
+                <input id="new-note-input" class="input" type="text" placeholder="Yeni not... (Enter)"/>
+            </section>
+            
+            <section id="pomodoro-widget-container" class="widget">
+                <div class="widget-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <h2 class="widget-title">Pomodoro</h2>
+                </div>
+                <div id="pomodoro-widget">
+                    <div class="pomodoro-display">
+                        <div id="pomodoro-timer">25:00</div>
+                        <div id="pomodoro-session">Odaklanma (1/4)</div>
+                    </div>
+                    <div id="pomodoro-controls">
+                        <button id="pomo-start" class="btn-ghost">Başlat</button>
+                        <button id="pomo-pause" class="btn-ghost">Duraklat</button>
+                        <button id="pomo-reset" class="btn-ghost">Sıfırla</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="weather-widget-container" class="widget">
+                <div class="widget-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a5 5 0 0 0-3-8h-1.26A8 8 0 1 0 4 15.25"></path></svg>
+                    <h2 class="widget-title">Hava Durumu</h2>
+                </div>
+                <div id="weather-widget">
+                     <div id="weather-content" class="weather-content">Yükleniyor...</div>
+                </div>
+            </section>
+            
+            <section id="quote-widget-container" class="widget">
+                <div class="widget-header">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    <h2 class="widget-title">Günün Sözü</h2>
+                    <button id="new-quote-btn" class="btn-ghost" style="margin-left:auto; height: 32px; padding: 0 12px;">Yeni</button>
+                </div>
+                <div id="quote-widget"></div>
+            </section>
+            
+            <section id="calculator-widget-container" class="widget">
+                <div class="widget-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="16" y1="14" x2="16" y2="18"></line><line x1="16" y1="10" x2="12" y2="10"></line><line x1="12" y1="10" x2="12" y2="18"></line><line x1="8" y1="10" x2="8" y2="18"></line></svg>
+                    <h2 class="widget-title">Hesap Makinesi</h2>
+                </div>
+                <div id="calculator-widget">
+                    <input type="text" id="calc-display" class="calc-display" readonly>
+                    <div id="calc-keys" class="calc-keys">
+                        <button class="operator">C</button><button class="operator">()</button><button class="operator">%</button><button class="operator">/</button>
+                        <button>7</button><button>8</button><button>9</button><button class="operator">*</button>
+                        <button>4</button><button>5</button><button>6</button><button class="operator">-</button>
+                        <button>1</button><button>2</button><button>3</button><button class="operator">+</button>
+                        <button>0</button><button>.</button><button class="equal">=</button>
+                    </div>
+                </div>
+            </section>
+            
+        </div>
+    </main>
+  </div>
+
+  <div id="shortcutModal" class="modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Yeni Kısayol Ekle/Düzenle</h3>
+        <button class="close-modal-btn" aria-label="Kapat">✕</button>
+      </div>
+      <div class="modal-body">
+        <form class="form" id="shortcutForm">
+            <input type="hidden" id="s-id">
+            <div class="form-group"><label class="label" for="s-title">Başlık</label><input id="s-title" class="control" type="text" placeholder="Örn: GitHub" required /></div>
+            <div class="form-group"><label class="label" for="s-url">URL</label><input id="s-url" class="control" type="url" placeholder="https://example.com" required /></div>
+            <div class="form-group"><label class="label" for="s-icon">İkon (Emoji veya Harf)</label><input id="s-icon" class="control" type="text" placeholder="💻" maxlength="3" /></div>
+            <div class="actions"><button type="button" class="btn-ghost cancel-modal-btn">Vazgeç</button><button type="submit" class="btn-primary">Kaydet</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="settingsModal" class="modal">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h3 class="modal-title">Ayarlar</h3>
+            <button class="close-modal-btn" aria-label="Kapat">✕</button>
+        </div>
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="tab-general">Genel</button>
+            <button class="tab-btn" data-tab="tab-appearance">Görünüm</button>
+            <button class="tab-btn" data-tab="tab-widgets">Araçlar</button>
+        </div>
+        <div class="modal-body">
+            <div id="tab-general" class="tab-content active">
+                <div class="form-group"><label class="label" for="user-name">Kullanıcı Adı</label><input id="user-name" class="control" type="text" placeholder="Adınızı girin..." /></div>
+            </div>
+
+            <div id="tab-appearance" class="tab-content">
+                <div class="form-group"><label class="label">Tema Seçimi</label><div id="theme-selector-container" class="theme-selector"></div></div>
+                <hr class="hr">
+                <div class="form-group"><label class="label" for="background-url">Özel Arkaplan URL</label><input id="background-url" class="control" type="url" placeholder="https_//....jpg (boş bırakarak temayı kullan)" /></div>
+                <hr class="hr">
+                <div class="form-group">
+                     <label class="label">Canlı Özelleştirme ("Özel" Tema Aktifken)</label>
+                     <div class="customization-grid">
+                        <div class="color-picker-wrapper"><label class="label">Ana Arka Plan</label><input type="color" id="custom-bg-0-picker" data-var="--custom-bg-0"></div>
+                        <div class="color-picker-wrapper"><label class="label">Ana Metin</label><input type="color" id="custom-text-picker" data-var="--custom-text"></div>
+                        <div class="color-picker-wrapper"><label class="label">Vurgu 1 (Cyan)</label><input type="color" id="custom-cyan-picker" data-var="--custom-cyan"></div>
+                        <div class="color-picker-wrapper"><label class="label">Vurgu 2 (Magenta)</label><input type="color" id="custom-magenta-picker" data-var="--custom-magenta"></div>
+                     </div>
+                </div>
+            </div>
+            
+            <div id="tab-widgets" class="tab-content">
+                <div class="form-group">
+                    <label class="label">Gösterilecek Araçları Seçin</label>
+                    <div id="widget-toggle-grid" class="widget-toggle-grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+    // --- STATE & STORAGE ---
+    const Store = {
+        get: (key, def) => { try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : def; } catch { return def; } },
+        set: (key, val) => { try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) { console.error("Depolama hatası:", e); } }
+    };
+
+    let state = {
+        theme: Store.get('theme', 'gokboru-dark'),
+        userName: Store.get('userName', ''),
+        backgroundUrl: Store.get('backgroundUrl', ''),
+        shortcuts: Store.get('shortcuts', [
+            { id: crypto.randomUUID(), title: 'GitHub', url: 'https://github.com', icon: '💻' },
+            { id: crypto.randomUUID(), title: 'YouTube', url: 'https://youtube.com', icon: '🎬' },
+            { id: crypto.randomUUID(), title: 'ChatGPT', url: 'https://chat.openai.com', icon: '🤖' }
+        ]),
+        notes: Store.get('notes', [{ id: crypto.randomUUID(), text: 'Yeni bir not ekle...' }]),
+        customColors: Store.get('customColors', { '--custom-bg-0': '#1f1f32', '--custom-text': '#efefff', '--custom-cyan': '#00aaff', '--custom-magenta': '#8a3ffc' }),
+        widgetVisibility: Store.get('widgetVisibility', {
+            shortcuts: true, notes: true, pomodoro: true, weather: true, quote: true, calculator: true
+        })
+    };
+
+    // --- CONSTANTS ---
+    const THEMES = [
+        { id: 'gokboru-dark', name: 'Gökbörü Dark', colors: ['#00aaff', '#8a3ffc', '#101623'] }, { id: 'gokboru-light', name: 'Gökbörü Light', colors: ['#0077cc', '#6e23d9', '#f0f3f9'] },
+        { id: 'cyberpunk-dark', name: 'Cyberpunk', colors: ['#00ffe0', '#ff2bd6', '#0c0c14'] }, { id: 'dracula', name: 'Dracula', colors: ['#bd93f9', '#ff79c6', '#282a36'] },
+        { id: 'nord', name: 'Nord', colors: ['#88C0D0', '#B48EAD', '#2E3440'] }, { id: 'matrix', name: 'Matrix', colors: ['#00ff41', '#35ff6d', '#000000'] },
+        { id: 'turanci', name: 'Turancı', colors: ['#57a8c8', '#c8576c', '#3a2c2c'] }, { id: 'custom', name: 'Özel', colors: ['#888', '#aaa', '#ccc'] },
+    ];
+    const QUOTES = [
+        { text: "Bir kıvılcım düşer önce, büyür yavaş yavaş.", author: "H. Nihal Atsız" }, { text: "Türk, öğün, çalış, güven!", author: "M. Kemal Atatürk" },
+        { text: "Hayatta en hakiki mürşit ilimdir, fendir.", author: "M. Kemal Atatürk" }, { text: "Adalet, mülkün temelidir.", author: "Hz. Ömer" },
+        { text: "Vatanını en çok seven, görevini en iyi yapandır.", author: "M. Kemal Atatürk" }, { text: "Umutsuz durumlar yoktur, umutsuz insanlar vardır.", author: "M. Kemal Atatürk" }
+    ];
+    const SEARCH_COMMANDS = {
+        '!yt': q => `https://www.youtube.com/results?search_query=${q}`, '!gh': q => `https://github.com/search?q=${q}`,
+        '!tw': q => `https://twitter.com/search?q=${q}`, default: q => `https://www.google.com/search?q=${q}`
+    };
+
+    // --- DOM ELEMENTS ---
+    const DOMElements = {
+        docEl: document.documentElement, time: document.getElementById('time'), date: document.getElementById('date'), greeting: document.getElementById('greeting'),
+        searchInput: document.getElementById('q'), shortcutGrid: document.getElementById('shortcuts-grid'), notesContainer: document.getElementById('notes-container'),
+        newNoteInput: document.getElementById('new-note-input'), shortcutModal: document.getElementById('shortcutModal'), settingsModal: document.getElementById('settingsModal'),
+        shortcutForm: document.getElementById('shortcutForm'), pomoTimer: document.getElementById('pomodoro-timer'), pomoSession: document.getElementById('pomodoro-session'),
+        themeSelector: document.getElementById('theme-selector-container'), weatherContent: document.getElementById('weather-content'), quoteWidget: document.getElementById('quote-widget'),
+        customColorPickers: document.querySelectorAll('.customization-grid input[type="color"]'), userNameInput: document.getElementById('user-name'),
+        backgroundUrlInput: document.getElementById('background-url'), calcDisplay: document.getElementById('calc-display'), calcKeys: document.getElementById('calc-keys'),
+        widgetToggleGrid: document.getElementById('widget-toggle-grid')
+    };
+
+    // --- UI MODULE ---
+    const UI = {
+        openModal: (modalEl) => modalEl.classList.add('active'),
+        closeModal: (modalEl) => modalEl.classList.remove('active'),
+        colorLuminance: (hex, lum) => {
+            hex = String(hex).replace(/[^0-9a-f]/gi, ''); if (hex.length < 6) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2]; lum = lum || 0;
+            let rgb = "#", c, i; for (i = 0; i < 3; i++) { c = parseInt(hex.substr(i*2,2), 16); c = Math.round(Math.min(Math.max(0, c * (1 + lum)), 255)).toString(16); rgb += ("00"+c).substr(c.length); } return rgb;
+        },
+        applyCustomColors: () => {
+            const { docEl } = DOMElements; const { customColors } = state; const baseBg = customColors['--custom-bg-0'];
+            docEl.style.setProperty('--custom-bg-0', baseBg); docEl.style.setProperty('--custom-bg-1', UI.colorLuminance(baseBg, -0.1));
+            docEl.style.setProperty('--custom-bg-2', UI.colorLuminance(baseBg, -0.2)); docEl.style.setProperty('--custom-bg-3', `rgba(${parseInt(baseBg.slice(1,3),16)},${parseInt(baseBg.slice(3,5),16)},${parseInt(baseBg.slice(5,7),16)},0.7)`);
+            docEl.style.setProperty('--custom-text', customColors['--custom-text']); docEl.style.setProperty('--custom-muted', UI.colorLuminance(customColors['--custom-text'], -0.3));
+            docEl.style.setProperty('--custom-cyan', customColors['--custom-cyan']); docEl.style.setProperty('--custom-magenta', customColors['--custom-magenta']);
+            docEl.style.setProperty('--custom-yellow', UI.colorLuminance(customColors['--custom-cyan'], 0.5));
+        },
+        applyTheme: (themeId) => {
+            DOMElements.docEl.setAttribute('data-theme', themeId); state.theme = themeId; Store.set('theme', themeId);
+            if (themeId === 'custom') UI.applyCustomColors(); else ['--custom-bg-0','--custom-bg-1','--custom-bg-2','--custom-bg-3','--custom-text','--custom-muted','--custom-cyan','--custom-magenta','--custom-yellow'].forEach(prop => DOMElements.docEl.style.removeProperty(prop));
+            document.querySelectorAll('.theme-option').forEach(opt => opt.classList.toggle('active', opt.dataset.themeId === themeId));
+        },
+        applyBackground: (url) => { document.body.style.backgroundImage = url ? `url(${url})` : ''; state.backgroundUrl = url; Store.set('backgroundUrl', url); },
+        renderThemeSelector: () => {
+            DOMElements.themeSelector.innerHTML = THEMES.map(theme => `
+                <div class="theme-option ${theme.id === state.theme ? 'active' : ''}" data-theme-id="${theme.id}">
+                    <div class="title">${theme.name}</div>
+                    <div class="theme-preview">
+                        <span style="background-color:${theme.colors[0]}"></span><span style="background-color:${theme.colors[1]}"></span><span style="background-color:${theme.colors[2]}"></span>
+                    </div>
+                </div>`).join('');
+        },
+        renderWidgetToggles: () => {
+            const widgetNames = { shortcuts: 'Kısayollar', notes: 'Notlar', pomodoro: 'Pomodoro', weather: 'Hava Durumu', quote: 'Günün Sözü', calculator: 'Hesap Makinesi' };
+            DOMElements.widgetToggleGrid.innerHTML = Object.keys(state.widgetVisibility).map(key => `
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" data-widget-key="${key}" ${state.widgetVisibility[key] ? 'checked' : ''}>
+                    <span>${widgetNames[key] || key}</span>
+                </label>`).join('');
+        },
+        updateWidgetVisibility: () => {
+            for (const key in state.widgetVisibility) {
+                const container = document.getElementById(`${key}-widget-container`);
+                if (container) container.classList.toggle('hidden', !state.widgetVisibility[key]);
+            }
+        }
+    };
+    
+    // --- FEATURE MODULES ---
+    const Clock = {
+        update: () => {
+            const now = new Date();
+            if (DOMElements.time) DOMElements.time.textContent = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+            if (DOMElements.date) DOMElements.date.textContent = now.toLocaleDateString('tr-TR', { weekday: 'long', day: 'numeric', month: 'long' });
+            const hour = now.getHours(); let greetingText;
+            if (hour < 5) greetingText = "İyi geceler"; else if (hour < 12) greetingText = "Günaydın"; else if (hour < 18) greetingText = "Tünaydın"; else greetingText = "İyi akşamlar";
+            if (DOMElements.greeting) DOMElements.greeting.textContent = `${greetingText}, ${state.userName || 'Bozkurt'}!`;
+        },
+        init: () => { Clock.update(); setInterval(Clock.update, 1000); }
+    };
+
+    const Search = {
+        execute: () => {
+            const query = DOMElements.searchInput.value.trim(); if (!query) return;
+            const [command, ...rest] = query.split(' '); const searchQuery = rest.join(' ');
+            const url = (SEARCH_COMMANDS[command] && searchQuery) ? SEARCH_COMMANDS[command](encodeURIComponent(searchQuery)) : SEARCH_COMMANDS.default(encodeURIComponent(query));
+            window.open(url, '_blank'); DOMElements.searchInput.value = '';
+        }
+    };
+
+    const Shortcuts = {
+        render: () => {
+            DOMElements.shortcutGrid.innerHTML = state.shortcuts.map(s => `
+                <div class="shortcut-card" data-url="${s.url}" title="${s.url}">
+                    <div class="card-actions">
+                        <button class="mini-btn edit-shortcut-btn" data-id="${s.id}" title="Düzenle">✏️</button>
+                        <button class="mini-btn delete-shortcut-btn" data-id="${s.id}" title="Sil">🗑️</button>
+                    </div>
+                    <div class="icon">${s.icon || s.title?.[0]?.toUpperCase() || '★'}</div>
+                    <div class="title">${s.title}</div>
+                    <div class="url">${s.url.replace(/^https?:\/\//, '')}</div>
+                </div>`).join('');
+        },
+        save: (e) => {
+            e.preventDefault(); const form = e.target;
+            let url = form.querySelector('#s-url').value.trim(); if (url && !url.startsWith('http')) url = 'https://' + url;
+            const id = form.querySelector('#s-id').value;
+            const shortcutData = { title: form.querySelector('#s-title').value.trim(), url, icon: form.querySelector('#s-icon').value.trim() };
+            if (id) state.shortcuts = state.shortcuts.map(s => s.id === id ? { ...s, ...shortcutData } : s);
+            else state.shortcuts.unshift({ id: crypto.randomUUID(), ...shortcutData });
+            Store.set('shortcuts', state.shortcuts); Shortcuts.render(); UI.closeModal(DOMElements.shortcutModal); form.reset();
+        },
+        delete: (id) => { state.shortcuts = state.shortcuts.filter(s => s.id !== id); Store.set('shortcuts', state.shortcuts); Shortcuts.render(); },
+        edit: (id) => {
+            const shortcut = state.shortcuts.find(s => s.id === id); if (!shortcut) return;
+            const form = DOMElements.shortcutForm;
+            form.querySelector('#s-id').value = shortcut.id; form.querySelector('#s-title').value = shortcut.title;
+            form.querySelector('#s-url').value = shortcut.url; form.querySelector('#s-icon').value = shortcut.icon;
+            UI.openModal(DOMElements.shortcutModal);
+        }
+    };
+
+    const Notes = {
+        render: () => {
+            DOMElements.notesContainer.innerHTML = state.notes.map(note => `
+                <div class="note"><span class="note-text">${note.text}</span><button class="note-delete-btn" data-id="${note.id}" title="Notu Sil">✕</button></div>`).join('');
+        },
+        add: () => { const text = DOMElements.newNoteInput.value.trim(); if (!text) return; state.notes.unshift({ id: crypto.randomUUID(), text }); Store.set('notes', state.notes); Notes.render(); DOMElements.newNoteInput.value = ''; },
+        delete: (id) => { state.notes = state.notes.filter(n => n.id !== id); Store.set('notes', state.notes); Notes.render(); }
+    };
+
+    const Pomodoro = {
+        interval: null, time: 1500, running: false, session: 1, isBreak: false,
+        updateDisplay: () => { DOMElements.pomoTimer.textContent = `${Math.floor(Pomodoro.time/60).toString().padStart(2,'0')}:${(Pomodoro.time%60).toString().padStart(2,'0')}`; DOMElements.pomoSession.textContent = `${Pomodoro.isBreak ? 'Mola' : 'Odaklanma'} (${Pomodoro.session}/4)`; },
+        start: () => { if (Pomodoro.running) return; Pomodoro.running = true; Pomodoro.interval = setInterval(() => { Pomodoro.time--; Pomodoro.updateDisplay(); if (Pomodoro.time <= 0) { Pomodoro.next(); } }, 1000); },
+        pause: () => { Pomodoro.running = false; clearInterval(Pomodoro.interval); },
+        reset: () => { Pomodoro.pause(); Pomodoro.isBreak = false; Pomodoro.session = 1; Pomodoro.time = 1500; Pomodoro.updateDisplay(); },
+        next: () => {
+            Pomodoro.pause(); alert(`Süre doldu! ${Pomodoro.isBreak ? 'Odaklanma zamanı!' : 'Mola zamanı!'}`);
+            Pomodoro.isBreak = !Pomodoro.isBreak;
+            if (Pomodoro.isBreak) Pomodoro.time = (Pomodoro.session === 4) ? 900 : 300; // Uzun mola
+            else { Pomodoro.time = 1500; Pomodoro.session++; }
+            if (Pomodoro.session > 4) Pomodoro.session = 1;
+            Pomodoro.updateDisplay();
+        }
+    };
+
+    const Weather = {
+        get: async () => {
+            navigator.geolocation.getCurrentPosition(async pos => {
+                const { latitude, longitude } = pos.coords; const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`;
+                try {
+                    const res = await fetch(url); const data = await res.json(); const w = data.current_weather;
+                    const icons = {0:'☀️',1:'🌤️',2:'🌥️',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌦️',61:'🌧️',63:'🌧️',65:'🌧️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
+                    DOMElements.weatherContent.innerHTML = `<div class="weather-temp">${icons[w.weathercode]||'🌀'} ${Math.round(w.temperature)}°C</div><div class="weather-desc">Rüzgar: ${w.windspeed} km/s</div>`;
+                } catch { DOMElements.weatherContent.innerText = "Hava durumu alınamadı."; }
+            }, () => { DOMElements.weatherContent.innerText = "Konum izni reddedildi."; });
+        }
+    };
+
+    const Quote = { render: () => { const q = QUOTES[Math.floor(Math.random() * QUOTES.length)]; DOMElements.quoteWidget.innerHTML = `<p class="quote-text">“${q.text}”</p><p class="quote-author">- ${q.author}</p>`; }};
+
+    const Calculator = {
+        init: () => {
+            DOMElements.calcKeys.addEventListener('click', e => {
+                if (e.target.tagName !== 'BUTTON') return;
+                const key = e.target.textContent; const display = DOMElements.calcDisplay;
+                if (key === 'C') display.value = '';
+                else if (key === '=') try { display.value = eval(display.value.replace(/%/g, '/100')); } catch { display.value = 'Hata'; }
+                else display.value += key;
+            });
+        }
+    };
+
+    // --- INITIALIZATION & EVENT LISTENERS ---
+    const init = () => {
+        // Initial setup
+        if (state.theme === 'custom') DOMElements.customColorPickers.forEach(p => p.value = state.customColors[p.dataset.var]);
+        UI.applyTheme(state.theme); UI.applyBackground(state.backgroundUrl);
+        DOMElements.userNameInput.value = state.userName; DOMElements.backgroundUrlInput.value = state.backgroundUrl;
+
+        // Render dynamic content
+        Clock.init(); Shortcuts.render(); Notes.render(); UI.renderThemeSelector(); Pomodoro.updateDisplay(); Quote.render(); Weather.get(); Calculator.init(); UI.renderWidgetToggles(); UI.updateWidgetVisibility();
+        
+        // Setup event listeners using delegation where possible
+        document.addEventListener('click', e => {
+            const { searchBtn, addShortcutBtn, newNoteInput, navSettings, shortcutModal } = DOMElements;
+            // Search
+            if (e.target.id === 'searchBtn') Search.execute();
+            // Shortcut Actions
+            if (e.target.id === 'addShortcutBtn') { shortcutForm.reset(); UI.openModal(shortcutModal); }
+            if (e.target.closest('.shortcut-card') && !e.target.closest('.card-actions')) window.open(e.target.closest('.shortcut-card').dataset.url, '_blank');
+            if (e.target.matches('.delete-shortcut-btn')) Shortcuts.delete(e.target.dataset.id);
+            if (e.target.matches('.edit-shortcut-btn')) Shortcuts.edit(e.target.dataset.id);
+            // Note Actions
+            if (e.target.matches('.note-delete-btn')) Notes.delete(e.target.dataset.id);
+            // Pomodoro Controls
+            if (e.target.id === 'pomo-start') Pomodoro.start(); if (e.target.id === 'pomo-pause') Pomodoro.pause(); if (e.target.id === 'pomo-reset') Pomodoro.reset();
+            // Quote
+            if (e.target.id === 'new-quote-btn') Quote.render();
+            // Settings
+            if (e.target.id === 'nav-settings') UI.openModal(DOMElements.settingsModal);
+            if (e.target.closest('.theme-option')) UI.applyTheme(e.target.closest('.theme-option').dataset.themeId);
+            // Modals
+            if (e.target.matches('.modal, .cancel-modal-btn, .close-modal-btn')) e.target.closest('.modal')?.classList.remove('active');
+            // Tabs in Settings
+            if (e.target.matches('.tab-btn')) {
+                const tabId = e.target.dataset.tab;
+                document.querySelectorAll('.tab-btn, .tab-content').forEach(el => el.classList.remove('active'));
+                e.target.classList.add('active'); document.getElementById(tabId).classList.add('active');
+            }
+        });
+
+        DOMElements.searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') Search.execute(); });
+        DOMElements.newNoteInput.addEventListener('keydown', e => { if (e.key === 'Enter') Notes.add(); });
+        DOMElements.shortcutForm.addEventListener('submit', Shortcuts.save);
+        
+        // Settings Inputs
+        DOMElements.userNameInput.addEventListener('input', e => { state.userName = e.target.value; Store.set('userName', state.userName); Clock.update(); });
+        DOMElements.backgroundUrlInput.addEventListener('change', e => UI.applyBackground(e.target.value));
+        DOMElements.customColorPickers.forEach(p => p.addEventListener('input', e => { state.customColors[e.target.dataset.var] = e.target.value; Store.set('customColors', state.customColors); if (state.theme !== 'custom') UI.applyTheme('custom'); else UI.applyCustomColors(); }));
+        DOMElements.widgetToggleGrid.addEventListener('change', e => {
+            if (e.target.type === 'checkbox') {
+                const key = e.target.dataset.widgetKey; state.widgetVisibility[key] = e.target.checked;
+                Store.set('widgetVisibility', state.widgetVisibility); UI.updateWidgetVisibility();
+            }
+        });
+
+        // Global keydowns
+        window.addEventListener('keydown', e => {
+            const isMac = navigator.platform.toUpperCase().includes('MAC');
+            if ((isMac ? e.metaKey : e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); DOMElements.searchInput.focus(); DOMElements.searchInput.select(); }
+            if (e.key === 'Escape') { UI.closeModal(DOMElements.shortcutModal); UI.closeModal(DOMElements.settingsModal); }
+        });
+    };
+
+    init();
+    })();
+  </script>
+</body>
+</html>
