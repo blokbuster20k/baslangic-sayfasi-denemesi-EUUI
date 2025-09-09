@@ -598,7 +598,8 @@
               UI.Toast.show('Başlık ve URL gerekli', 'warn');
               return;
             }
-            let shortcuts = Store.get('shortcuts');
+            let shortcuts = Store.get('shortcuts', []);
+                                                                     
             if (data.editId) {
               const idx = shortcuts.findIndex(s => s.id === data.editId);
               if (idx > -1) shortcuts[idx] = {...shortcuts[idx], title:data.title, url:data.url, icon: data.icon};
@@ -846,3 +847,4 @@
 </body>
 
 </html>
+
